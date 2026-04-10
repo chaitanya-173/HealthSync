@@ -4,8 +4,8 @@ import { saveEntry, getSavedEntries, logFromSaved } from "../controllers/savedCo
 
 const router = Router();
 
-router.get("/", protect, getSavedEntries);        // /api/saved
-router.post("/:id", protect, saveEntry);          // /api/saved/:id
-router.post("/use/:id", protect, logFromSaved);   // /api/saved/use/:id
+router.get("/", protect, getSavedEntries);        
+router.post("/:id", protect, saveEntry);          
+router.post("/use/:id", protect, logFromSaved);   
 
 export default router;

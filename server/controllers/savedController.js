@@ -15,7 +15,7 @@ export const saveEntry = async (req, res) => {
 
     const saved = await SavedEntry.create({
       userId: req.user._id,
-      title: log.text, // simple for now
+      title: log.text, // todo : (simple for now)
       text: log.text,
       result: log.result,
     });

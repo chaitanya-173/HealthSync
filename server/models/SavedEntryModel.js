@@ -8,7 +8,7 @@ const savedEntrySchema = new mongoose.Schema(
       required: true,
     },
     title: {
-      type: String, // e.g. "Morning Milk"
+      type: String, 
       required: true,
     },
     text: {

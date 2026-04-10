@@ -12,7 +12,7 @@ const logSchema = new mongoose.Schema(
       required: true,
     },
     result: {
-      type: Object, // AI response pura ka pura
+      type: Object, 
       required: true,
     },
     createdAt: {
