@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoadingUser(true);
       const res = await fetchMeService();
-      if (res.data?.success) setUser(res.data.data || res.data.user);
+      if (res.data?.success) setUser(res.data.data);
     } catch (err) {
       setUser(null);
     } finally {

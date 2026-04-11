@@ -7,14 +7,6 @@ import Home from "./pages/Home";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// Placeholder pages (baad me replace karenge)
-import MyBooks from "./pages/MyBooks";
-import Sell from "./pages/Sell";
-import Categories from "./pages/Categories";
-import EditProfile from "./pages/EditProfile";
-import Favourites from "./pages/Favourites";
-import ListingDetails from "./pages/ListingDetails";
-
 export default function App() {
   return (
     <BrowserRouter>
@@ -22,57 +14,20 @@ export default function App() {
 
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/categories" element={<Categories />} />
-
         {/* Protected Routes */}
+
         <Route
-          path="/my-books"
+          path="/"
           element={
             <ProtectedRoute>
-              <MyBooks />
+              <Home />
             </ProtectedRoute>
           }
         />
 
-        <Route
-          path="/listing/:id"
-          element={
-            <ProtectedRoute>
-              <ListingDetails />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/sell"
-          element={
-            <ProtectedRoute>
-              <Sell />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/edit-profile"
-          element={
-            <ProtectedRoute>
-              <EditProfile />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/favourites"
-          element={
-            <ProtectedRoute>
-              <Favourites />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
     </BrowserRouter>
   );

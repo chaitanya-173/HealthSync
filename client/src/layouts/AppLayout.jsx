@@ -1,19 +1,35 @@
-import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
+import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-export default function AppLayout({ children }) {
+export default function AppLayout() {
+  // load from localStorage
+  const [collapsed, setCollapsed] = useState(() => {
+    const saved = localStorage.getItem("sidebar-collapsed");
+    return saved === "true";
+  });
+
+  // save to localStorage
+  useEffect(() => {
+    localStorage.setItem("sidebar-collapsed", collapsed);
+  }, [collapsed]);
+
   return (
-    <div className="min-h-screen w-full bg-[var(--bg)] text-[var(--text)]">
-      
-      {/* Navbar */}
-      <Navbar />
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
 
-      {/* Spacer (IMPORTANT 🔥) */}
-      <div className="h-24"></div>
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-      {/* Page Content */}
-      <main className="max-w-7xl mx-auto px-4 pb-10">
-        {children}
-      </main>
+      {/* Main Content */}
+      <div
+        className={`
+          transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+          ${collapsed ? "ml-20" : "ml-72"}
+          p-6
+        `}
+      >
+        <Outlet />
+      </div>
+
     </div>
   );
 }
