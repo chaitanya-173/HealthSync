@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import AppLayout from "./layouts/AppLayout";
 
 export default function App() {
   return (
@@ -19,15 +20,12 @@ export default function App() {
 
         {/* Protected Routes */}
 
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout/>}>
+            <Route path="/" element={<Home />} />
+          </Route>
+        </Route>
+        
       </Routes>
     </BrowserRouter>
   );

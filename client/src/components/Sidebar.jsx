@@ -136,7 +136,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
             onClick={() => setProfileOpen((prev) => !prev)}
             className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-[var(--surface)] transition w-full"
           >
-            {/* ✅ ICON FIX */}
+            {/* ICON FIX */}
             <div className="w-[18px] flex justify-center">
               <User size={18} />
             </div>
