@@ -6,49 +6,57 @@ export default function LogCard({ log }) {
   const items = result?.items || [];
   const total = result?.total || {};
 
+  const macros = [
+    { label: "Cal", value: total.calories },
+    { label: "C", value: total.carbs },
+    { label: "P", value: total.protein },
+    { label: "F", value: total.fat },
+  ];
+
   return (
-    <div className="
+    <div
+      className="
       rounded-xl p-4
       border border-[var(--border)]
       bg-[var(--surface)]/70 backdrop-blur-xl
-      shadow
+      shadow-sm
       space-y-3
-    ">
-
-      {/* 🔹 Original Input */}
+      hover:shadow-md transition
+    "
+    >
+      {/* 🔹 Input */}
       {text && (
-        <p className="text-xs text-[var(--text-muted)] truncate">
+        <p className="text-[11px] text-[var(--text-muted)] truncate">
           {text}
         </p>
       )}
 
-      {/* 🔹 ITEMS */}
-      <div className="space-y-3">
+      {/* 🔹 Items */}
+      <div className="space-y-2">
         {items.map((item, i) => (
           <div key={i} className="space-y-1">
-
-            {/* Name */}
-            <p className="font-medium text-sm">
-              {item.name} ({item.quantity})
+            <p className="text-sm font-medium">
+              {item.name}{" "}
+              <span className="text-[var(--text-muted)] text-xs">
+                ({item.quantity})
+              </span>
             </p>
 
-            {/* Macros chips */}
-            <div className="flex flex-wrap gap-2 text-xs">
-              <span className="px-2 py-0.5 rounded-md bg-[var(--border)]">
-                Calories: {item.calories}
+            <div className="flex gap-2 flex-wrap text-[10px]">
+              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
+                {item.calories} cal
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-[var(--border)]">
-                Carbs: {item.carbs}g
+              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
+                C {item.carbs}
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-[var(--border)]">
-                Protein: {item.protein}g
+              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
+                P {item.protein}
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-[var(--border)]">
-                Fat: {item.fat}g
+              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
+                F {item.fat}
               </span>
             </div>
 
-            {/* Divider between items */}
             {i !== items.length - 1 && (
               <div className="border-t border-[var(--border)] mt-2" />
             )}
@@ -56,48 +64,36 @@ export default function LogCard({ log }) {
         ))}
       </div>
 
-      {/* 🔹 TOTAL */}
-      <div className="border-t border-[var(--border)] pt-3">
-
-        <div className="grid grid-cols-4 gap-2 text-center text-xs">
-
-          {[
-            { label: "Calories", value: total.calories },
-            { label: "Carbs", value: `${total.carbs}g` },
-            { label: "Protein", value: `${total.protein}g` },
-            { label: "Fat", value: `${total.fat}g` },
-          ].map((m, i) => (
-            <div key={i}>
-              <p className="text-[var(--text-muted)]">{m.label}</p>
-              <p className="font-semibold text-sm">{m.value}</p>
-
-              <div className="h-[3px] bg-[var(--border)] rounded mt-1">
-                <div className="h-[3px] bg-[var(--primary)] rounded w-[40%]" />
+      {/* 🔹 TOTAL (Circular Style) */}
+      <div className="flex justify-between items-center pt-2 border-t border-[var(--border)]">
+        <div className="flex gap-4">
+          {macros.map((m, i) => (
+            <div key={i} className="flex flex-col items-center gap-1">
+              {/* Circle */}
+              <div className="w-10 h-10 rounded-full border-2 border-[var(--primary)] flex items-center justify-center text-[11px] font-semibold">
+                {m.value}
               </div>
+
+              <span className="text-[10px] text-[var(--text-muted)]">
+                {m.label}
+              </span>
             </div>
           ))}
-
         </div>
 
-      </div>
+        {/* Time + actions */}
+        <div className="flex items-center gap-3">
+          <span className="text-[10px] text-[var(--text-muted)]">
+            {new Date(createdAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
 
-      {/* 🔹 FOOTER */}
-      <div className="flex items-center justify-between pt-1">
-
-        <span className="text-xs text-[var(--text-muted)]">
-          {new Date(createdAt).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </span>
-
-        <div className="flex items-center gap-2">
-          <Pencil size={14} className="cursor-pointer hover:text-[var(--primary)]" />
-          <MoreVertical size={14} className="cursor-pointer hover:text-[var(--primary)]" />
+          <Pencil size={14} className="cursor-pointer" />
+          <MoreVertical size={14} className="cursor-pointer" />
         </div>
-
       </div>
-
     </div>
   );
 }

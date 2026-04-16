@@ -18,7 +18,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     const res = await login({
-      identifier: data.identifier,
+      email: data.email,
       password: data.password,
     });
     if (res.ok) navigate("/");
@@ -27,11 +27,8 @@ export default function Login() {
   return (
     <AuthLayout type="login">
       <div className="space-y-6">
-
         {/* Heading */}
-        <h2 className="text-2xl font-semibold tracking-tight">
-          Sign in
-        </h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Sign in</h2>
 
         {/* Switch */}
         <p className="text-sm text-[var(--text-muted)]">
@@ -46,15 +43,14 @@ export default function Login() {
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-
           {/* Identifier */}
           <div>
             <label className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
-              Email or Username
+              Email 
             </label>
             <input
-              {...register("identifier", { required: "Required" })}
-              placeholder="Enter your email or username"
+              {...register("email", { required: "Email is required" })}
+              placeholder="Enter your email"
               className="w-full mt-1 px-4 py-3 rounded-xl 
               bg-[var(--surface)] border border-[var(--border)] 
               text-[var(--text)] text-sm
@@ -118,7 +114,6 @@ export default function Login() {
           >
             {isSubmitting ? "Signing in..." : "Sign in"}
           </button>
-
         </form>
       </div>
     </AuthLayout>

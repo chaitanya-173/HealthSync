@@ -55,22 +55,20 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
-    <div className="space-y-6">
-      {/* 🧠 Top Section (Date + Week Selector) */}
+    <div className="h-[calc(100vh-120px)] flex flex-col gap-6">
+      {/* 🧠 Top Section (Fixed) */}
       <div className="relative flex items-center justify-center">
-        {/* LEFT DATE BOX */}
         <div className="absolute left-0">
           <DateBox selectedDate={selectedDate} />
         </div>
 
-        {/* CENTER WEEK SELECTOR */}
         <WeekSelector
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
       </div>
 
-      {/* 🔥 Stats */}
+      {/* 🔥 Stats (Fixed) */}
       <StatsCards
         data={{
           calories: {
@@ -86,20 +84,17 @@ export default function Home() {
         }}
       />
 
-      {/* 🔥 LOGS (UPDATED ✅) */}
-      <div className="space-y-4">
+      {/* 🔥 LOGS (Scrollable Area ✅) */}
+      <div className="flex-1 no-scrollbar overflow-y-auto pr-2 space-y-4">
+        <LogCard log={mockLog} />
+        <LogCard log={mockLog} />
+        <LogCard log={mockLog} />
+        <LogCard log={mockLog} />
         <LogCard log={mockLog} />
       </div>
 
+      {/* ⌨️ Input Bar */}
       <InputBar />
-
-      {/* 🔽 Placeholder */}
-      {/* <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6">
-        <h2 className="text-lg font-semibold mb-2">Selected Date</h2>
-        <p className="text-[var(--text-muted)]">
-          {selectedDate.toDateString()}
-        </p>
-      </div> */}
     </div>
   );
 }
