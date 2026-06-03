@@ -1,9 +1,9 @@
 import { useState } from "react";
 import WeekSelector from "../components/WeekSelector";
-import StatsCards from "../components/StatsCards";
 import DateBox from "../components/DateBox";
 import LogCard from "../components/LogCard";
 import InputBar from "../components/InputBar";
+import NutritionProgressCard from "../components/NutritionProgressCard";
 
 const mockLog = {
   userId: "69d5e15060e540429d62ef8e",
@@ -55,37 +55,39 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
-    <div className="h-[calc(100vh-120px)] flex flex-col gap-6">
-      {/* 🧠 Top Section (Fixed) */}
-      <div className="relative flex items-center justify-center">
-        <div className="absolute left-0">
-          <DateBox selectedDate={selectedDate} />
+    <div className="h-[calc(100vh-120px)] flex flex-col gap-5">
+      {/* TOP */}
+      <div className="grid grid-cols-2 gap-5">
+        <div className="min-w-0">
+          <div className="flex gap-3 mb-4">
+            <DateBox selectedDate={selectedDate} />
+
+            <button
+              className="
+          px-5 py-3
+          rounded-2xl
+          border border-[var(--border)]
+          bg-[var(--surface)]/70
+          backdrop-blur-xl
+        "
+            >
+              Future
+            </button>
+          </div>
+
+          <WeekSelector
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
         </div>
 
-        <WeekSelector
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
+        <div className="w-full">
+          <NutritionProgressCard />
+        </div>
       </div>
 
-      {/* 🔥 Stats (Fixed) */}
-      <StatsCards
-        data={{
-          calories: {
-            consumed: 950,
-            burned: 0,
-            remaining: 1150,
-          },
-          macros: {
-            carbs: 112,
-            protein: 41,
-            fat: 35.5,
-          },
-        }}
-      />
-
-      {/* 🔥 LOGS (Scrollable Area ✅) */}
-      <div className="flex-1 no-scrollbar overflow-y-auto pr-2 space-y-4">
+      {/* LOGS */}
+      <div className="flex-1 overflow-y-auto no-scrollbar space-y-4 pr-1">
         <LogCard log={mockLog} />
         <LogCard log={mockLog} />
         <LogCard log={mockLog} />
@@ -93,7 +95,7 @@ export default function Home() {
         <LogCard log={mockLog} />
       </div>
 
-      {/* ⌨️ Input Bar */}
+      {/* INPUT */}
       <InputBar />
     </div>
   );

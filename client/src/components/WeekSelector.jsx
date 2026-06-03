@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export default function WeekSelector({ selectedDate, setSelectedDate }) {
+export default function WeekSelector({
+  selectedDate,
+  setSelectedDate,
+}) {
   const [weekDays, setWeekDays] = useState([]);
 
   useEffect(() => {
@@ -27,31 +30,47 @@ export default function WeekSelector({ selectedDate, setSelectedDate }) {
     d1.toDateString() === d2.toDateString();
 
   return (
-    <div className="w-full flex justify-center">
-
-      {/* Outer glass container */}
-      <div className="
-        relative flex items-center gap-1
-        p-1 rounded-2xl
-        bg-[var(--surface)]/70 backdrop-blur-xl
-        border border-[var(--border)]
-        shadow
-      ">
-
+    <div className="w-full">
+      <div
+        className="
+          w-full
+          relative
+          flex
+          items-center
+          justify-between
+          gap-1
+          p-1
+          rounded-2xl
+          bg-[var(--surface)]/70
+          backdrop-blur-xl
+          border border-[var(--border)]
+          shadow
+        "
+      >
         {weekDays.map((d, index) => {
-          const selected = isSameDay(d.date, selectedDate);
+          const selected = isSameDay(
+            d.date,
+            selectedDate
+          );
 
           return (
             <button
               key={index}
-              onClick={() => setSelectedDate(d.date)}
+              onClick={() =>
+                setSelectedDate(d.date)
+              }
               className={`
-                relative z-10
-                flex flex-col items-center justify-center
-                px-5 py-3
+                flex-1
+                py-3
                 rounded-xl
-                text-sm font-medium
-                transition-all duration-300
+                flex flex-col
+                items-center
+                justify-center
+                text-sm
+                font-medium
+                transition-all
+                duration-300
+
                 ${
                   selected
                     ? "bg-[var(--primary)] text-white shadow"
@@ -59,13 +78,17 @@ export default function WeekSelector({ selectedDate, setSelectedDate }) {
                 }
               `}
             >
-              <span className="text-xs">{d.day}</span>
-              <span className="text-base font-semibold">{d.dayNum}</span>
+              <span className="text-xs">
+                {d.day}
+              </span>
+
+              <span className="text-base font-semibold">
+                {d.dayNum}
+              </span>
             </button>
           );
         })}
       </div>
-
     </div>
   );
 }
