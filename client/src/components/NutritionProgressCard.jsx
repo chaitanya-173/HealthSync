@@ -9,26 +9,50 @@ export default function NutritionProgressCard() {
   const macros = [
     {
       label: "Carbs",
-      current: 180,
+      current: 110,
       goal: 190,
-      color: "#F7B731",
-      track: "#5B4716",
+      color: "#F59E0B",
+      track: "#4B3200",
     },
     {
       label: "Protein",
-      current: 150,
+      current: 110,
       goal: 150,
-      color: "#00B8A3",
-      track: "#103A38",
+      color: "#22C55E",
+      track: "#11361C",
     },
     {
       label: "Fat",
       current: 45,
       goal: 70,
-      color: "#EF4743",
-      track: "#4A1D1D",
+      color: "#A855F7",
+      track: "#2C1747",
     },
   ];
+
+  // const macros = [
+  //   {
+  //     label: "Carbs",
+  //     current: 110,
+  //     goal: 190,
+  //     color: "#F7B731",
+  //     track: "#5B4716",
+  //   },
+  //   {
+  //     label: "Protein",
+  //     current: 110,
+  //     goal: 150,
+  //     color: "#00B8A3",
+  //     track: "#103A38",
+  //   },
+  //   {
+  //     label: "Fat",
+  //     current: 45,
+  //     goal: 70,
+  //     color: "#EF4743",
+  //     track: "#4A1D1D",
+  //   },
+  // ];
 
   const totalGoal = macros[0].goal + macros[1].goal + macros[2].goal;
 
@@ -62,22 +86,21 @@ export default function NutritionProgressCard() {
 
   return (
     <div
-  className="
+      className="
     w-full
     h-[170px]
-
     rounded-3xl
     border border-[var(--border)]
     bg-[var(--surface)]/70
     backdrop-blur-xl
-
-    px-4 py-2
-    flex items-center justify-between
+    px-6 py-2
+    flex items-center justify-center
+    gap-12
     overflow-hidden
   "
->
+    >
       {/* CHART */}
-      <div className="relative w-[180px] h-[145px] flex-shrink-0">
+      <div className="relative w-[150px] h-[125px] flex-shrink-0 ml-2">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             {/* CARBS TRACK */}
@@ -86,8 +109,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={carbsStart}
               endAngle={carbsEnd}
-              innerRadius={68}
-              outerRadius={74}
+              innerRadius={56}
+              outerRadius={62}
               stroke="none"
               cornerRadius={50}
               isAnimationActive={false}
@@ -101,8 +124,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={carbsStart}
               endAngle={carbsStart - carbsArc * carbsProgress}
-              innerRadius={68}
-              outerRadius={74}
+              innerRadius={56}
+              outerRadius={62}
               stroke="none"
               cornerRadius={50}
             >
@@ -115,8 +138,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={proteinStart}
               endAngle={proteinEnd}
-              innerRadius={68}
-              outerRadius={74}
+              innerRadius={56}
+              outerRadius={62}
               stroke="none"
               cornerRadius={50}
               isAnimationActive={false}
@@ -130,8 +153,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={proteinStart}
               endAngle={proteinStart - proteinArc * proteinProgress}
-              innerRadius={68}
-              outerRadius={74}
+              innerRadius={56}
+              outerRadius={62}
               stroke="none"
               cornerRadius={50}
             >
@@ -144,8 +167,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={fatStart}
               endAngle={fatEnd}
-              innerRadius={68}
-              outerRadius={74}
+              innerRadius={56}
+              outerRadius={62}
               stroke="none"
               cornerRadius={50}
               isAnimationActive={false}
@@ -159,8 +182,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={fatStart}
               endAngle={fatStart - fatArc * fatProgress}
-              innerRadius={68}
-              outerRadius={74}
+              innerRadius={56}
+              outerRadius={62}
               stroke="none"
               cornerRadius={50}
             >
@@ -177,18 +200,18 @@ export default function NutritionProgressCard() {
             items-center justify-center
           "
         >
-          <h2 className="text-[32px] font-bold leading-none">
+          <h2 className="text-[24px] font-bold leading-none">
             {calories.current}
           </h2>
 
-          <p className="text-sm text-[var(--text-muted)]">/{calories.goal}</p>
+          <p className="text-xs text-[var(--text-muted)]">/{calories.goal}</p>
 
-          <p className="mt-1 text-xs text-[var(--text-muted)]">Calories</p>
+          <p className="mt-1 text-[11px] text-[var(--text-muted)]">Calories</p>
         </div>
       </div>
 
       {/* RIGHT STATS */}
-      <div className="flex flex-col gap-2 w-[90px]">
+      <div className="flex flex-col gap-2 w-[85px]">
         {macros.map((m) => (
           <div
             key={m.label}
@@ -198,7 +221,7 @@ export default function NutritionProgressCard() {
             }}
           >
             <p
-              className="text-xs font-medium"
+              className="text-[11px] font-medium"
               style={{
                 color: m.color,
               }}
@@ -206,7 +229,7 @@ export default function NutritionProgressCard() {
               {m.label}
             </p>
 
-            <p className="text-[16px] font-semibold">
+            <p className="text-[14px] font-semibold">
               {m.current}
               <span className="text-[var(--text-muted)] font-normal">
                 /{m.goal}
