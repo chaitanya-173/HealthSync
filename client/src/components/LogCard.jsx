@@ -1,99 +1,154 @@
-import { Pencil, MoreVertical } from "lucide-react";
+import { useState } from "react";
+import { ChevronRight, Pencil, MoreVertical } from "lucide-react";
 
-export default function LogCard({ log }) {
+export default function LogCard({ log, index = 0 }) {
+  const [expanded, setExpanded] = useState(false);
+
   const { result, createdAt, text } = log;
 
   const items = result?.items || [];
   const total = result?.total || {};
-
-  const macros = [
-    { label: "Cal", value: total.calories },
-    { label: "C", value: total.carbs },
-    { label: "P", value: total.protein },
-    { label: "F", value: total.fat },
-  ];
+  const title = items
+    .slice(0, 3)
+    .map((item) => item.name)
+    .join(" • ");
 
   return (
     <div
-      className="
-      rounded-xl p-4
-      border border-[var(--border)]
-      bg-[var(--surface)]/70 backdrop-blur-xl
-      shadow-sm
-      space-y-3
-      hover:shadow-md transition
-    "
+      className={`
+    ${index % 2 === 0 ? "bg-white/[0.025]" : ""}
+
+    transition
+    hover:bg-white/[0.03]
+  `}
     >
-      {/* 🔹 Input */}
-      {text && (
-        <p className="text-[11px] text-[var(--text-muted)] truncate">
-          {text}
-        </p>
-      )}
+      {/* COLLAPSED HEADER */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="
+          w-full
+          px-5 py-2.5
+          flex items-center justify-between
+          text-left
+        "
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <ChevronRight
+            size={16}
+            className={`
+              shrink-0
+              transition-transform
+              duration-200
+              ${expanded ? "rotate-90" : ""}
+            `}
+          />
 
-      {/* 🔹 Items */}
-      <div className="space-y-2">
-        {items.map((item, i) => (
-          <div key={i} className="space-y-1">
-            <p className="text-sm font-medium">
-              {item.name}{" "}
-              <span className="text-[var(--text-muted)] text-xs">
-                ({item.quantity})
-              </span>
+          <div className="min-w-0">
+            <p className="text-sm font-medium truncate">{title}</p>
+
+            <p className="text-[11px] text-[var(--text-muted)] mt-1">
+              {new Date(createdAt).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </p>
-
-            <div className="flex gap-2 flex-wrap text-[10px]">
-              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
-                {item.calories} cal
-              </span>
-              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
-                C {item.carbs}
-              </span>
-              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
-                P {item.protein}
-              </span>
-              <span className="px-2 py-[2px] rounded-md bg-[var(--border)]">
-                F {item.fat}
-              </span>
-            </div>
-
-            {i !== items.length - 1 && (
-              <div className="border-t border-[var(--border)] mt-2" />
-            )}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* 🔹 TOTAL (Circular Style) */}
-      <div className="flex justify-between items-center pt-2 border-t border-[var(--border)]">
-        <div className="flex gap-4">
-          {macros.map((m, i) => (
-            <div key={i} className="flex flex-col items-center gap-1">
-              {/* Circle */}
-              <div className="w-10 h-10 rounded-full border-2 border-[var(--primary)] flex items-center justify-center text-[11px] font-semibold">
-                {m.value}
-              </div>
-
-              <span className="text-[10px] text-[var(--text-muted)]">
-                {m.label}
-              </span>
+        {/* RIGHT SIDE */}
+        <div className="flex items-center shrink-0 ml-auto">
+          <div className="flex items-center gap-8">
+            <div className="text-right w-10">
+              <p className="text-sm font-semibold">{total.calories}</p>
+              <p className="text-[10px] text-[var(--text-muted)]">Calories</p>
             </div>
-          ))}
-        </div>
 
-        {/* Time + actions */}
-        <div className="flex items-center gap-3">
-          <span className="text-[10px] text-[var(--text-muted)]">
-            {new Date(createdAt).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </span>
+            <div className="text-right w-8">
+              <p className="text-sm font-semibold text-amber-400">
+                {total.carbs}g
+              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Carbs</p>
+            </div>
 
-          <Pencil size={14} className="cursor-pointer" />
-          <MoreVertical size={14} className="cursor-pointer" />
+            <div className="text-right w-8">
+              <p className="text-sm font-semibold text-green-400">
+                {total.protein}g
+              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Protein</p>
+            </div>
+
+            <div className="text-right w-8">
+              <p className="text-sm font-semibold text-purple-400">
+                {total.fat}g
+              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Fat</p>
+            </div>
+          </div>
+
+          <div className="w-px h-8 bg-white/10 mx-5" />
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="p-1.5 rounded hover:bg-white/[0.05]"
+            >
+              <Pencil size={14} />
+            </button>
+
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="p-1.5 rounded hover:bg-white/[0.05]"
+            >
+              <MoreVertical size={14} />
+            </button>
+          </div>
         </div>
-      </div>
+      </button>
+
+      {/* EXPANDED CONTENT */}
+      {expanded && (
+        <div className="px-6 pb-3">
+          <div className="py-2 space-y-1">
+            {items.map((item, i) => (
+              <div
+                key={i}
+                className="
+    flex
+    items-center
+    justify-between
+    py-2
+  "
+              >
+                <div>
+                  <p className="text-sm font-medium">{item.name}</p>
+
+                  <p className="text-xs text-[var(--text-muted)]">
+                    {item.quantity}
+                  </p>
+                </div>
+
+                <div className="flex gap-2 text-xs">
+                  <span className="px-2 py-1 rounded-md bg-[#202938]">
+                    Calories: {item.calories} 
+                  </span>
+
+                  <span className="px-2 py-1 rounded-md bg-[#202938] text-amber-400">
+                    Carbs: {item.carbs}g
+                  </span>
+
+                  <span className="px-2 py-1 rounded-md bg-[#202938] text-green-400">
+                    Protein: {item.protein}g
+                  </span>
+
+                  <span className="px-2 py-1 rounded-md bg-[#202938] text-purple-400">
+                    Fat: {item.fat}g
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

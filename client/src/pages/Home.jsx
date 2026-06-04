@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { NotebookPen, Bookmark } from "lucide-react";
+
 import WeekSelector from "../components/WeekSelector";
 import DateBox from "../components/DateBox";
-import LogCard from "../components/LogCard";
 import InputBar from "../components/InputBar";
 import NutritionProgressCard from "../components/NutritionProgressCard";
+import LogCards from "../components/LogCards";
 
 const mockLog = {
   userId: "69d5e15060e540429d62ef8e",
@@ -43,33 +45,33 @@ const mockLog = {
       carbs: 112,
       fat: 35.5,
     },
-    analysis:
-      "This meal provides a balanced mix of proteins and carbs, suitable for a mid-day energy boost.",
   },
-  _id: "69db981cc0f7efbdd27ed032",
   createdAt: "2026-04-12T13:03:24.402Z",
-  updatedAt: "2026-04-12T13:03:24.402Z",
 };
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [activeTab, setActiveTab] = useState("logs");
+
+  const logs = Array(12).fill(mockLog);
 
   return (
-    <div className="h-[calc(100vh-120px)] flex flex-col gap-5">
-      {/* TOP */}
-      <div className="grid grid-cols-2 gap-5">
-        <div className="min-w-0">
-          <div className="flex gap-3 mb-4">
+    <div className="h-[calc(100vh-120px)] flex flex-col gap-5 min-h-0">
+      {/* TOP SECTION */}
+      <div className="grid grid-cols-[1fr_420px] gap-5">
+        {/* LEFT */}
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-3">
             <DateBox selectedDate={selectedDate} />
 
             <button
               className="
-          px-5 py-3
-          rounded-2xl
-          border border-[var(--border)]
-          bg-[var(--surface)]/70
-          backdrop-blur-xl
-        "
+                px-5 py-3
+                rounded-2xl
+                border border-[var(--border)]
+                bg-[var(--surface)]/70
+                backdrop-blur-xl
+              "
             >
               Future
             </button>
@@ -79,20 +81,54 @@ export default function Home() {
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
           />
+
+          {/* TABS MOVED HERE */}
+          <div className="flex items-center gap-8 pt-1">
+            <button
+              onClick={() => setActiveTab("logs")}
+              className={`
+                flex items-center gap-2
+                text-sm
+                pb-2
+                transition
+                ${
+                  activeTab === "logs"
+                    ? "text-[var(--primary)] border-b-2 border-[var(--primary)]"
+                    : "text-[var(--text-muted)] border-b-2 border-transparent hover:text-white"
+                }
+              `}
+            >
+              <NotebookPen size={15} />
+              Logged
+            </button>
+
+            <button
+              onClick={() => setActiveTab("saved")}
+              className={`
+                flex items-center gap-2
+                text-sm
+                pb-2
+                transition
+                ${
+                  activeTab === "saved"
+                    ? "text-[var(--primary)] border-b-2 border-[var(--primary)]"
+                    : "text-[var(--text-muted)] border-b-2 border-transparent hover:text-white"
+                }
+              `}
+            >
+              <Bookmark size={15} />
+              Saved
+            </button>
+          </div>
         </div>
 
-        <div className="w-full">
-          <NutritionProgressCard />
-        </div>
+        {/* RIGHT */}
+        <NutritionProgressCard />
       </div>
 
       {/* LOGS */}
-      <div className="flex-1 overflow-y-auto no-scrollbar space-y-4 pr-1">
-        <LogCard log={mockLog} />
-        <LogCard log={mockLog} />
-        <LogCard log={mockLog} />
-        <LogCard log={mockLog} />
-        <LogCard log={mockLog} />
+      <div className="flex-1 min-h-0">
+        <LogCards logs={logs} activeTab={activeTab} />
       </div>
 
       {/* INPUT */}
