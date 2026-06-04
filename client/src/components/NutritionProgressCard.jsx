@@ -8,21 +8,21 @@ export default function NutritionProgressCard() {
 
   const macros = [
     {
-      label: "Carbs",
+      label: "Carbs (g)",
       current: 110,
       goal: 190,
       color: "#F59E0B",
       track: "#4B3200",
     },
     {
-      label: "Protein",
+      label: "Protein (g)",
       current: 110,
       goal: 150,
       color: "#22C55E",
       track: "#11361C",
     },
     {
-      label: "Fat",
+      label: "Fat (g)",
       current: 45,
       goal: 70,
       color: "#A855F7",
@@ -61,9 +61,7 @@ export default function NutritionProgressCard() {
   const GAP = 5;
 
   const carbsArc = (macros[0].goal / totalGoal) * TOTAL_ARC;
-
   const proteinArc = (macros[1].goal / totalGoal) * TOTAL_ARC;
-
   const fatArc = (macros[2].goal / totalGoal) * TOTAL_ARC;
 
   const carbsStart = START;
@@ -75,12 +73,9 @@ export default function NutritionProgressCard() {
   const fatStart = proteinEnd - GAP;
   const fatEnd = fatStart - fatArc;
 
-  const carbsProgress =
-    Math.min(macros[0].current, macros[0].goal) / macros[0].goal;
-  const proteinProgress =
-    Math.min(macros[1].current, macros[1].goal) / macros[1].goal;
-  const fatProgress =
-    Math.min(macros[2].current, macros[2].goal) / macros[2].goal;
+  const carbsProgress = Math.min(macros[0].current, macros[0].goal) / macros[0].goal;
+  const proteinProgress = Math.min(macros[1].current, macros[1].goal) / macros[1].goal;
+  const fatProgress = Math.min(macros[2].current, macros[2].goal) / macros[2].goal;
 
   const caloriesLeft = calories.goal - calories.current;
 
