@@ -4,30 +4,25 @@ import { Outlet } from "react-router-dom";
 export default function NewAppLayout() {
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <NewSidebar/>
+      <NewSidebar />
 
-      {/* CENTER */}
-      <div className="ml-[272px] mr-72 p-6">
+      <main className="ml-[272px] mr-[304px] p-6">
         <Outlet />
-      </div>
+      </main>
 
-      {/* RIGHT PANEL */}
-      <div
+      <aside
         className="
-          fixed right-4 top-4 bottom-4
+          fixed top-6 right-6 bottom-6
           w-64
-          rounded-3xl
-          border border-[var(--border)]
-          bg-[var(--bg)]/70
-          backdrop-blur-2xl
-          shadow-[0_10px_40px_rgba(0,0,0,0.25)]
-          p-4
+          rounded-2xl
+          bg-[var(--surface)]
+          p-5
         "
       >
-        <div className="text-sm text-[var(--text-muted)]">
+        <p className="text-sm text-[var(--text-muted)]">
           Right Panel
-        </div>
-      </div>
+        </p>
+      </aside>
     </div>
   );
 }

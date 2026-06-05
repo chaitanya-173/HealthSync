@@ -28,74 +28,106 @@ export default function NewSidebar() {
   const navClass = ({ isActive }) =>
     `
       flex items-center gap-3
-      px-4 py-3 rounded-xl
-      transition
+      px-4 py-3
+      rounded-2xl
+      text-sm font-medium
+      transition-all
+
       ${
         isActive
-          ? "bg-[var(--surface)] text-[var(--primary)]"
-          : "hover:bg-[var(--surface)]"
+          ? "bg-[var(--surface-alt)] text-[var(--primary)]"
+          : "text-[var(--text-muted)] hover:bg-[var(--surface-alt)] hover:text-[var(--text)]"
       }
     `;
 
   return (
     <aside
       className="
-        fixed z-50
-        top-4 left-4 bottom-4
+        fixed
+        top-6
+        left-6
+        bottom-6
+
         w-60
-        rounded-3xl
-        border border-[var(--border)]
-        bg-[var(--bg)]/70
-        backdrop-blur-2xl
-        shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+
+        rounded-2xl
+        bg-[var(--surface)]
+
         flex flex-col
       "
     >
-      {/* Logo */}
-      <div className="h-16 flex items-center px-6 font-bold text-lg">
-        HealthSync
+      {/* LOGO */}
+      <div className="px-6 pt-6 pb-5">
+        <h1 className="text-xl font-bold tracking-tight">
+          HealthSync
+        </h1>
       </div>
 
-      {/* NAV */}
-      <div className="flex flex-col gap-2 px-3 flex-1">
+      {/* NAVIGATION */}
+      <div className="flex-1 px-4 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon;
 
           return (
-            <NavLink key={item.label} to={item.path} className={navClass}>
+            <NavLink
+              key={item.label}
+              to={item.path}
+              className={navClass}
+            >
               <Icon size={18} />
-              <span className="text-sm font-medium">{item.label}</span>
+
+              <span>{item.label}</span>
             </NavLink>
           );
         })}
       </div>
 
-      {/* Bottom */}
-      <div className="p-3 border-t border-[var(--border)] flex flex-col gap-2">
+      {/* FOOTER */}
+      <div className="p-4 space-y-2">
         <button
           onClick={toggleTheme}
           className="
+            w-full
             flex items-center gap-3
-            px-4 py-3 rounded-xl
-            hover:bg-[var(--surface)]
-            transition
+            px-4 py-3
+            rounded-2xl
+
+            text-[var(--text-muted)]
+
+            hover:bg-[var(--surface-alt)]
+            hover:text-[var(--text)]
+
+            transition-all
           "
         >
           {dark ? <Sun size={18} /> : <Moon size={18} />}
-          <span className="text-sm">{dark ? "Light Mode" : "Dark Mode"}</span>
+
+          <span className="text-sm">
+            {dark ? "Light Mode" : "Dark Mode"}
+          </span>
         </button>
 
         <button
           onClick={() => setProfileOpen((prev) => !prev)}
           className="
+            w-full
             flex items-center gap-3
-            px-4 py-3 rounded-xl
-            hover:bg-[var(--surface)]
-            transition
+            px-4 py-3
+            rounded-2xl
+
+            text-[var(--text-muted)]
+
+            hover:bg-[var(--surface-alt)]
+            hover:text-[var(--text)]
+
+            transition-all
           "
         >
           <User size={18} />
-          <span className="text-sm">Profile</span>
+
+          <span className="text-sm">
+            Profile
+          </span>
         </button>
 
         <ProfileDropdown

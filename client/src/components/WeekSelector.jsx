@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const days = ["S", "M", "T", "W", "T", "F", "S"];
 
 export default function WeekSelector({
   selectedDate,
@@ -14,6 +14,7 @@ export default function WeekSelector({
 
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
+
       d.setDate(today.getDate() - i);
 
       temp.push({
@@ -30,65 +31,53 @@ export default function WeekSelector({
     d1.toDateString() === d2.toDateString();
 
   return (
-    <div className="w-full">
-      <div
-        className="
-          w-full
-          relative
-          flex
-          items-center
-          justify-between
-          gap-1
-          p-1
-          rounded-2xl
-          bg-[var(--surface)]/70
-          backdrop-blur-xl
-          border border-[var(--border)]
-          shadow
-        "
-      >
-        {weekDays.map((d, index) => {
-          const selected = isSameDay(
-            d.date,
-            selectedDate
-          );
+    <div
+      className="
+        flex items-center justify-between
+        px-4 py-3
+        rounded-2xl
+        bg-[var(--surface)]
+      "
+    >
+      {weekDays.map((d, index) => {
+        const selected = isSameDay(
+          d.date,
+          selectedDate
+        );
 
-          return (
-            <button
-              key={index}
-              onClick={() =>
-                setSelectedDate(d.date)
-              }
+        return (
+          <button
+            key={index}
+            onClick={() => setSelectedDate(d.date)}
+            className="
+              flex flex-col items-center
+              gap-1.5
+            "
+          >
+            <span className="text-xs text-[var(--text-muted)]">
+              {d.day}
+            </span>
+
+            <div
               className={`
-                flex-1
-                py-3
-                rounded-xl
-                flex flex-col
-                items-center
-                justify-center
-                text-sm
-                font-medium
-                transition-all
-                duration-300
+                w-9 h-9
+                rounded-full
+                flex items-center justify-center
+                text-sm font-semibold
+                transition-all duration-200
 
                 ${
                   selected
-                    ? "bg-[var(--primary)] text-white shadow"
-                    : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    ? "bg-[var(--primary)] text-white"
+                    : "bg-[var(--surface-alt)] text-[var(--text)]"
                 }
               `}
             >
-              <span className="text-xs">
-                {d.day}
-              </span>
-
-              <span className="text-base font-semibold">
-                {d.dayNum}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+              {d.dayNum}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }

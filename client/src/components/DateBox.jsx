@@ -11,8 +11,7 @@ export default function DateBox({ selectedDate }) {
 
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
-      month: "long",
-      year: "numeric",
+      month: "short",
     });
   };
 
@@ -20,13 +19,11 @@ export default function DateBox({ selectedDate }) {
     <button
       className="
         flex items-center gap-2
-        px-5 py-3   /* EXACT same as week buttons */
+        px-4 py-2.5
         rounded-2xl
-        bg-[var(--surface)]/70 backdrop-blur-xl
-        border border-[var(--border)]
-        shadow
-        hover:bg-[var(--surface)]
-        transition-all duration-300
+        bg-[var(--surface)]
+        hover:opacity-90
+        transition-all duration-200
       "
     >
       <span className="text-sm font-medium">
@@ -34,7 +31,7 @@ export default function DateBox({ selectedDate }) {
       </span>
 
       <ChevronDown
-        size={16}
+        size={15}
         className="text-[var(--text-muted)]"
       />
     </button>

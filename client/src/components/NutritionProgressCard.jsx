@@ -8,21 +8,21 @@ export default function NutritionProgressCard() {
 
   const macros = [
     {
-      label: "Carbs (g)",
+      label: "Carbs",
       current: 110,
       goal: 190,
       color: "#F59E0B",
       track: "#4B3200",
     },
     {
-      label: "Protein (g)",
+      label: "Protein",
       current: 110,
       goal: 150,
       color: "#22C55E",
       track: "#11361C",
     },
     {
-      label: "Fat (g)",
+      label: "Fat",
       current: 45,
       goal: 70,
       color: "#A855F7",
@@ -30,33 +30,9 @@ export default function NutritionProgressCard() {
     },
   ];
 
-  // const macros = [
-  //   {
-  //     label: "Carbs",
-  //     current: 110,
-  //     goal: 190,
-  //     color: "#F7B731",
-  //     track: "#5B4716",
-  //   },
-  //   {
-  //     label: "Protein",
-  //     current: 110,
-  //     goal: 150,
-  //     color: "#00B8A3",
-  //     track: "#103A38",
-  //   },
-  //   {
-  //     label: "Fat",
-  //     current: 45,
-  //     goal: 70,
-  //     color: "#EF4743",
-  //     track: "#4A1D1D",
-  //   },
-  // ];
-
   const totalGoal = macros[0].goal + macros[1].goal + macros[2].goal;
 
-  const TOTAL_ARC = 345; // 265
+  const TOTAL_ARC = 345;
   const START = 225;
   const GAP = 5;
 
@@ -73,29 +49,30 @@ export default function NutritionProgressCard() {
   const fatStart = proteinEnd - GAP;
   const fatEnd = fatStart - fatArc;
 
-  const carbsProgress = Math.min(macros[0].current, macros[0].goal) / macros[0].goal;
-  const proteinProgress = Math.min(macros[1].current, macros[1].goal) / macros[1].goal;
-  const fatProgress = Math.min(macros[2].current, macros[2].goal) / macros[2].goal;
+  const carbsProgress =
+    Math.min(macros[0].current, macros[0].goal) / macros[0].goal;
 
-  const caloriesLeft = calories.goal - calories.current;
+  const proteinProgress =
+    Math.min(macros[1].current, macros[1].goal) / macros[1].goal;
+
+  const fatProgress =
+    Math.min(macros[2].current, macros[2].goal) / macros[2].goal;
 
   return (
     <div
       className="
-    w-full
-    h-[170px]
-    rounded-3xl
-    border border-[var(--border)]
-    bg-[var(--surface)]/70
-    backdrop-blur-xl
-    px-6 py-2
-    flex items-center justify-center
-    gap-12
-    overflow-hidden
-  "
+        w-full
+        h-[205px]
+        rounded-2xl
+        bg-[var(--surface)]
+        px-6 py-3
+        flex items-center justify-center
+        gap-12
+        overflow-hidden
+      "
     >
       {/* CHART */}
-      <div className="relative w-[150px] h-[125px] flex-shrink-0 ml-2">
+      <div className="relative w-[180px] h-[150px] flex-shrink-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             {/* CARBS TRACK */}
@@ -104,8 +81,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={carbsStart}
               endAngle={carbsEnd}
-              innerRadius={56}
-              outerRadius={62}
+              innerRadius={68}
+              outerRadius={74}
               stroke="none"
               cornerRadius={50}
               isAnimationActive={false}
@@ -119,8 +96,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={carbsStart}
               endAngle={carbsStart - carbsArc * carbsProgress}
-              innerRadius={56}
-              outerRadius={62}
+              innerRadius={68}
+              outerRadius={74}
               stroke="none"
               cornerRadius={50}
             >
@@ -133,8 +110,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={proteinStart}
               endAngle={proteinEnd}
-              innerRadius={56}
-              outerRadius={62}
+              innerRadius={68}
+              outerRadius={74}
               stroke="none"
               cornerRadius={50}
               isAnimationActive={false}
@@ -148,8 +125,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={proteinStart}
               endAngle={proteinStart - proteinArc * proteinProgress}
-              innerRadius={56}
-              outerRadius={62}
+              innerRadius={68}
+              outerRadius={74}
               stroke="none"
               cornerRadius={50}
             >
@@ -162,8 +139,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={fatStart}
               endAngle={fatEnd}
-              innerRadius={56}
-              outerRadius={62}
+              innerRadius={68}
+              outerRadius={74}
               stroke="none"
               cornerRadius={50}
               isAnimationActive={false}
@@ -177,8 +154,8 @@ export default function NutritionProgressCard() {
               dataKey="value"
               startAngle={fatStart}
               endAngle={fatStart - fatArc * fatProgress}
-              innerRadius={56}
-              outerRadius={62}
+              innerRadius={68}
+              outerRadius={74}
               stroke="none"
               cornerRadius={50}
             >
@@ -188,14 +165,8 @@ export default function NutritionProgressCard() {
         </ResponsiveContainer>
 
         {/* CENTER */}
-        <div
-          className="
-            absolute inset-0
-            flex flex-col
-            items-center justify-center
-          "
-        >
-          <h2 className="text-[24px] font-bold leading-none">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <h2 className="text-[30px] font-bold leading-none">
             {calories.current}
           </h2>
 
@@ -205,29 +176,23 @@ export default function NutritionProgressCard() {
         </div>
       </div>
 
-      {/* RIGHT STATS */}
-      <div className="flex flex-col gap-2 w-[85px]">
+      {/* STATS */}
+      <div className="flex flex-col gap-3 w-[90px]">
         {macros.map((m) => (
           <div
             key={m.label}
             className="pl-2 border-l-2"
-            style={{
-              borderColor: m.color,
-            }}
+            style={{ borderColor: m.color }}
           >
-            <p
-              className="text-[11px] font-medium"
-              style={{
-                color: m.color,
-              }}
-            >
+            <p className="text-[11px] font-medium" style={{ color: m.color }}>
               {m.label}
             </p>
 
-            <p className="text-[14px] font-semibold">
-              {m.current}
+            <p className="text-[15px] font-semibold">
+              {m.current}g
               <span className="text-[var(--text-muted)] font-normal">
-                /{m.goal}
+                {" "}
+                / {m.goal}
               </span>
             </p>
           </div>
