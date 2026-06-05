@@ -32,7 +32,7 @@ export default function EditProfile() {
         </h2>
 
         {/* Card */}
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-6">
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
@@ -43,7 +43,7 @@ export default function EditProfile() {
               </label>
               <input
                 {...register("name", { required: "Name required" })}
-                className="w-full mt-1 px-4 py-3 rounded-xl 
+                className="w-full mt-1 px-4 py-3 rounded-lg 
                 bg-[var(--bg)] border border-[var(--border)] 
                 text-sm focus:outline-none 
                 focus:ring-2 focus:ring-[var(--primary)]"
@@ -62,7 +62,7 @@ export default function EditProfile() {
               </label>
               <input
                 {...register("username", { required: "Username required" })}
-                className="w-full mt-1 px-4 py-3 rounded-xl 
+                className="w-full mt-1 px-4 py-3 rounded-lg 
                 bg-[var(--bg)] border border-[var(--border)] 
                 text-sm focus:outline-none 
                 focus:ring-2 focus:ring-[var(--primary)]"
@@ -81,7 +81,7 @@ export default function EditProfile() {
               </label>
               <input
                 {...register("email", { required: "Email required" })}
-                className="w-full mt-1 px-4 py-3 rounded-xl 
+                className="w-full mt-1 px-4 py-3 rounded-lg 
                 bg-[var(--bg)] border border-[var(--border)] 
                 text-sm focus:outline-none 
                 focus:ring-2 focus:ring-[var(--primary)]"
@@ -108,7 +108,7 @@ export default function EditProfile() {
                   },
                 })}
                 placeholder="Enter phone number"
-                className="w-full mt-1 px-4 py-3 rounded-xl 
+                className="w-full mt-1 px-4 py-3 rounded-lg 
                 bg-[var(--bg)] border border-[var(--border)] 
                 text-sm focus:outline-none 
                 focus:ring-2 focus:ring-[var(--primary)]"
@@ -128,7 +128,7 @@ export default function EditProfile() {
               <input
                 {...register("location")}
                 placeholder="Enter your city"
-                className="w-full mt-1 px-4 py-3 rounded-xl 
+                className="w-full mt-1 px-4 py-3 rounded-lg 
                 bg-[var(--bg)] border border-[var(--border)] 
                 text-sm focus:outline-none 
                 focus:ring-2 focus:ring-[var(--primary)]"

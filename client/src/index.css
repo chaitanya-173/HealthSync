@@ -27,7 +27,7 @@
   --border: #E2E8F0;
 
   /* DESIGN TOKENS */
-  --radius: 1rem; /* rounded-2xl */
+  --radius: 1rem; /* rounded-lg */
   --gap: 1.5rem;  /* gap-6 */
 }
 .dark {

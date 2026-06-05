@@ -15,29 +15,13 @@ export default function LogCards({ logs }) {
   ];
 
   return (
-    <div
-      className="
-        bg-[var(--surface)]
-        rounded-2xl
-        h-full
-        overflow-y-auto
-        no-scrollbar
-        px-5
-        pb-5
-      "
-    >
+    <div className="bg-[var(--surface)] rounded-lg h-full overflow-y-auto no-scrollbar px-5 pb-5">
       {/* Tabs */}
       <div className="pt-5 pb-5">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveTab("logs")}
-            className={`
-              flex items-center gap-2
-              px-4 py-2.5
-              rounded-2xl
-              text-sm font-medium
-              transition-all duration-200
-
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
               ${
                 activeTab === "logs"
                   ? "bg-[var(--surface-alt)] text-[var(--text)]"
@@ -51,13 +35,7 @@ export default function LogCards({ logs }) {
 
           <button
             onClick={() => setActiveTab("saved")}
-            className={`
-              flex items-center gap-2
-              px-4 py-2.5
-              rounded-2xl
-              text-sm font-medium
-              transition-all duration-200
-
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
               ${
                 activeTab === "saved"
                   ? "bg-[var(--surface-alt)] text-[var(--text)]"
@@ -77,16 +55,9 @@ export default function LogCards({ logs }) {
           {logs.map((log, index) => (
             <div
               key={index}
-              className="
-                rounded-2xl
-                overflow-hidden
-                bg-[var(--surface)]
-              "
+              className="rounded-lg overflow-hidden bg-[var(--surface)]"
             >
-              <LogCard
-                log={log}
-                index={index}
-              />
+              <LogCard log={log} index={index} />
             </div>
           ))}
         </div>
@@ -98,14 +69,7 @@ export default function LogCards({ logs }) {
           {savedFoods.map((food, index) => (
             <div
               key={index}
-              className="
-                px-4 py-3
-                rounded-2xl
-                bg-[var(--surface)]
-                hover:bg-[var(--surface-alt)]
-                transition-all
-                cursor-pointer
-              "
+              className="px-4 py-3 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface-alt)] transition-all cursor-pointer"
             >
               {food}
             </div>

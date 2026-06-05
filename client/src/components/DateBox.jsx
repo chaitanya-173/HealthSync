@@ -16,24 +16,12 @@ export default function DateBox({ selectedDate }) {
   };
 
   return (
-    <button
-      className="
-        flex items-center gap-2
-        px-4 py-2.5
-        rounded-2xl
-        bg-[var(--surface)]
-        hover:opacity-90
-        transition-all duration-200
-      "
-    >
+    <button className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[var(--surface)] hover:opacity-90 transition-all duration-200">
       <span className="text-sm font-medium">
         {formatDisplayDate(selectedDate)}
       </span>
 
-      <ChevronDown
-        size={15}
-        className="text-[var(--text-muted)]"
-      />
+      <ChevronDown size={15} className="text-[var(--text-muted)]" />
     </button>
   );
 }

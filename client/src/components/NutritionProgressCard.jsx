@@ -59,18 +59,7 @@ export default function NutritionProgressCard() {
     Math.min(macros[2].current, macros[2].goal) / macros[2].goal;
 
   return (
-    <div
-      className="
-        w-full
-        h-[205px]
-        rounded-2xl
-        bg-[var(--surface)]
-        px-6 py-3
-        flex items-center justify-center
-        gap-12
-        overflow-hidden
-      "
-    >
+    <div className="w-full h-[205px] rounded-lg bg-[var(--surface)] px-6 py-3 flex items-center justify-center gap-12 overflow-hidden">
       {/* CHART */}
       <div className="relative w-[180px] h-[150px] flex-shrink-0">
         <ResponsiveContainer width="100%" height="100%">

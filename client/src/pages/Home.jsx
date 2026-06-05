@@ -51,7 +51,7 @@ export default function Home() {
   const logs = Array(4).fill(mockLog);
 
   return (
-    <div className="h-[calc(100vh-120px)] min-h-0 flex flex-col gap-6">
+    <div className="h-[calc(100vh-120px)] min-h-0 flex flex-col gap-5">
       <DashboardHeader
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}

@@ -20,7 +20,7 @@ export default function AuthLayout({ children, type = "login" }) {
           <div className="absolute bottom-10 right-10 w-40 h-40 border border-[var(--border)] rounded-full"></div>
         </div>
 
-        <div className="relative z-10 max-w-md space-y-6">
+        <div className="relative  max-w-md space-y-6">
 
           <h1 className="text-4xl font-bold leading-tight">
             {type === "signup"

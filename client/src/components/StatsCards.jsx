@@ -11,7 +11,7 @@ export default function StatsCards({ data }) {
 
       {/* Calories Card */}
       <div className="
-        rounded-2xl p-5
+        rounded-lg p-5
         border border-[var(--border)]
         bg-[var(--surface)]/70 backdrop-blur-xl
         shadow
@@ -41,7 +41,7 @@ export default function StatsCards({ data }) {
 
       {/* Macros Card */}
       <div className="
-        rounded-2xl p-5
+        rounded-lg p-5
         border border-[var(--border)]
         bg-[var(--surface)]/70 backdrop-blur-xl
         shadow

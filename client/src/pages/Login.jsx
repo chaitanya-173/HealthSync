@@ -51,7 +51,7 @@ export default function Login() {
             <input
               {...register("email", { required: "Email is required" })}
               placeholder="Enter your email"
-              className="w-full mt-1 px-4 py-3 rounded-xl 
+              className="w-full mt-1 px-4 py-3 rounded-lg 
               bg-[var(--surface)] border border-[var(--border)] 
               text-[var(--text)] text-sm
               focus:outline-none focus:ring-2 focus:ring-[var(--primary)] 
@@ -77,7 +77,7 @@ export default function Login() {
                 type={showPassword ? "text" : "password"}
                 {...register("password", { required: "Required" })}
                 placeholder="Enter password"
-                className="w-full mt-1 px-4 py-3 pr-10 rounded-xl 
+                className="w-full mt-1 px-4 py-3 pr-10 rounded-lg 
                 bg-[var(--surface)] border border-[var(--border)] 
                 text-[var(--text)] text-sm
                 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] 
@@ -106,7 +106,7 @@ export default function Login() {
           {/* Button */}
           <button
             disabled={isSubmitting}
-            className="w-full py-3 rounded-xl 
+            className="w-full py-3 rounded-lg 
             bg-[var(--accent)] 
             hover:opacity-90 active:scale-[0.98]
             transition-all duration-150 

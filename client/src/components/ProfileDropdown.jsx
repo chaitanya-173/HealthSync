@@ -35,11 +35,11 @@ export default function ProfileDropdown({ collapsed, open, setOpen }) {
             ${collapsed ? "left-16" : "left-72"}
             bottom-0 translate-y-[10px]
             w-64
-            rounded-2xl
+            rounded-lg
             border border-[var(--border)]
             bg-[var(--bg)]/80 backdrop-blur-xl
             shadow-[0_10px_40px_rgba(0,0,0,0.3)]
-            overflow-hidden z-50
+            overflow-hidden 
           `}
         >
           {/* Profile Info */}

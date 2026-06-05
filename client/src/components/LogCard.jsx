@@ -16,37 +16,21 @@ export default function LogCard({ log, index = 0 }) {
 
   return (
     <div
-      className={`
-        ${index % 2 === 0 ? "bg-[var(--surface-alt)]" : ""}
-
-        transition-colors duration-200
-        hover:bg-[var(--surface-alt)]
-      `}
+      className={`${index % 2 === 0 ? "bg-[var(--surface-alt)]" : ""}  transition-colors duration-200 hover:bg-[var(--surface-alt)]`}
     >
       {/* HEADER */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="
-          w-full
-          px-5 py-3
-          flex items-center justify-between
-          text-left
-        "
+        className="w-full px-5 py-3 flex items-center justify-between text-left"
       >
         <div className="flex items-center gap-3 min-w-0">
           <ChevronRight
             size={16}
-            className={`
-              shrink-0
-              transition-transform duration-200
-              ${expanded ? "rotate-90" : ""}
-            `}
+            className={`shrink-0 transition-transform duration-200 ${expanded ? "rotate-90" : ""}`}
           />
 
           <div className="min-w-0">
-            <p className="text-sm font-medium truncate">
-              {title}
-            </p>
+            <p className="text-sm font-medium truncate">{title}</p>
 
             <p className="text-[11px] text-[var(--text-muted)] mt-1">
               {new Date(createdAt).toLocaleTimeString([], {
@@ -61,13 +45,9 @@ export default function LogCard({ log, index = 0 }) {
         <div className="flex items-center shrink-0 ml-auto">
           <div className="flex items-center gap-8">
             <div className="text-right w-12">
-              <p className="text-sm font-semibold">
-                {total.calories}
-              </p>
+              <p className="text-sm font-semibold">{total.calories}</p>
 
-              <p className="text-[10px] text-[var(--text-muted)]">
-                Calories
-              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Calories</p>
             </div>
 
             <div className="text-right w-10">
@@ -78,9 +58,7 @@ export default function LogCard({ log, index = 0 }) {
                 {total.carbs}g
               </p>
 
-              <p className="text-[10px] text-[var(--text-muted)]">
-                Carbs
-              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Carbs</p>
             </div>
 
             <div className="text-right w-10">
@@ -91,9 +69,7 @@ export default function LogCard({ log, index = 0 }) {
                 {total.protein}g
               </p>
 
-              <p className="text-[10px] text-[var(--text-muted)]">
-                Protein
-              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Protein</p>
             </div>
 
             <div className="text-right w-10">
@@ -104,9 +80,7 @@ export default function LogCard({ log, index = 0 }) {
                 {total.fat}g
               </p>
 
-              <p className="text-[10px] text-[var(--text-muted)]">
-                Fat
-              </p>
+              <p className="text-[10px] text-[var(--text-muted)]">Fat</p>
             </div>
           </div>
 
@@ -115,24 +89,14 @@ export default function LogCard({ log, index = 0 }) {
           <div className="flex items-center gap-1">
             <button
               onClick={(e) => e.stopPropagation()}
-              className="
-                p-2
-                rounded-lg
-                hover:bg-[var(--surface-alt)]
-                transition
-              "
+              className=" p-2 rounded-lg hover:bg-[var(--surface-alt)] transition"
             >
               <Pencil size={14} />
             </button>
 
             <button
               onClick={(e) => e.stopPropagation()}
-              className="
-                p-2
-                rounded-lg
-                hover:bg-[var(--surface-alt)]
-                transition
-              "
+              className="p-2 rounded-lg hover:bg-[var(--surface-alt)] transition"
             >
               <MoreVertical size={14} />
             </button>
@@ -145,17 +109,9 @@ export default function LogCard({ log, index = 0 }) {
         <div className="px-6 pb-4">
           <div className="py-2 space-y-2">
             {items.map((item, i) => (
-              <div
-                key={i}
-                className="
-                  flex items-center justify-between
-                  py-2
-                "
-              >
+              <div key={i} className="flex items-center justify-between py-2">
                 <div>
-                  <p className="text-sm font-medium">
-                    {item.name}
-                  </p>
+                  <p className="text-sm font-medium">{item.name}</p>
 
                   <p className="text-xs text-[var(--text-muted)]">
                     {item.quantity}

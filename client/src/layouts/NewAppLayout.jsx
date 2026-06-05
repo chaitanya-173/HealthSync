@@ -6,7 +6,7 @@ export default function NewAppLayout() {
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <NewSidebar />
 
-      <main className="ml-[272px] mr-[304px] p-6">
+      <main className="ml-[272px] mr-[288px] p-6">
         <Outlet />
       </main>
 
@@ -14,7 +14,7 @@ export default function NewAppLayout() {
         className="
           fixed top-6 right-6 bottom-6
           w-64
-          rounded-2xl
+          rounded-lg
           bg-[var(--surface)]
           p-5
         "

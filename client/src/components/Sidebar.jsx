@@ -29,7 +29,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
   const navClass = ({ isActive }) =>
   `
     group relative flex items-center gap-3
-    px-4 py-2.5 rounded-xl
+    px-4 py-2.5 rounded-lg
     transition-[transform,opacity] duration-300
     ${
       isActive
@@ -41,7 +41,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
   return (
     <aside
       className={`
-        fixed z-50
+        fixed 
         top-4 left-4 bottom-4
         rounded-3xl
         border border-[var(--border)]
@@ -56,7 +56,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
       <div className="h-16 flex items-center px-3">
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-[var(--surface)] transition"
+          className="group relative flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-[var(--surface)] transition"
         >
           <div className="w-[18px] flex justify-center">
             <Menu size={18} />
@@ -103,7 +103,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
         {/* Theme */}
         <button
           onClick={toggleTheme}
-          className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-[var(--surface)] transition"
+          className="group relative flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-[var(--surface)] transition"
         >
           <div className="w-[18px] flex justify-center">
             {dark ? <Sun size={18} /> : <Moon size={18} />}
@@ -134,7 +134,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
         <div className="group relative">
           <button
             onClick={() => setProfileOpen((prev) => !prev)}
-            className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-[var(--surface)] transition w-full"
+            className="group relative flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-[var(--surface)] transition w-full"
           >
             {/* ICON FIX */}
             <div className="w-[18px] flex justify-center">
