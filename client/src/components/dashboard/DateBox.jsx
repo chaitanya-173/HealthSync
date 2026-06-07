@@ -1,6 +1,9 @@
 import { ChevronDown } from "lucide-react";
+import { useDashboard } from "../../context/DashboardContext";
 
-export default function DateBox({ selectedDate }) {
+export default function DateBox() {
+  const { selectedDate } = useDashboard();
+
   const formatDisplayDate = (date) => {
     const today = new Date();
     const yesterday = new Date();
@@ -11,7 +14,8 @@ export default function DateBox({ selectedDate }) {
 
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
-      month: "short",
+      month: "long",
+      year: "numeric",
     });
   };
 

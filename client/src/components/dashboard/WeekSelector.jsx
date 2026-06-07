@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
+import { useDashboard } from "../../context/DashboardContext";
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
 
-export default function WeekSelector({
-  selectedDate,
-  setSelectedDate,
-}) {
+export default function WeekSelector() {
   const [weekDays, setWeekDays] = useState([]);
 
+  const { selectedDate, setSelectedDate } = useDashboard();
+
   useEffect(() => {
-    const today = new Date();
     const temp = [];
 
     for (let i = 6; i >= 0; i--) {
-      const d = new Date();
+      const d = new Date(selectedDate);
 
-      d.setDate(today.getDate() - i);
+      d.setDate(selectedDate.getDate() - i);
 
       temp.push({
         date: d,
@@ -25,10 +24,9 @@ export default function WeekSelector({
     }
 
     setWeekDays(temp);
-  }, []);
+  }, [selectedDate]);
 
-  const isSameDay = (d1, d2) =>
-    d1.toDateString() === d2.toDateString();
+  const isSameDay = (d1, d2) => d1.toDateString() === d2.toDateString();
 
   return (
     <div
@@ -40,10 +38,7 @@ export default function WeekSelector({
       "
     >
       {weekDays.map((d, index) => {
-        const selected = isSameDay(
-          d.date,
-          selectedDate
-        );
+        const selected = isSameDay(d.date, selectedDate);
 
         return (
           <button
@@ -54,9 +49,7 @@ export default function WeekSelector({
               gap-1.5
             "
           >
-            <span className="text-xs text-[var(--text-muted)]">
-              {d.day}
-            </span>
+            <span className="text-xs text-[var(--text-muted)]">{d.day}</span>
 
             <div
               className={`

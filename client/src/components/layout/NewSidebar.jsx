@@ -8,9 +8,9 @@ import {
   User,
   LayoutDashboard,
 } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { NavLink } from "react-router-dom";
-import ProfileDropdown from "./ProfileDropdown";
+import ProfileDropdown from "../common/ProfileDropdown"
 import { useState } from "react";
 
 const navItems = [
