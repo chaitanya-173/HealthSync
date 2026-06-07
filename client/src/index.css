@@ -27,15 +27,16 @@
   --border: #E2E8F0;
 
   /* DESIGN TOKENS */
-  --radius: 1rem; /* rounded-lg */
-  --gap: 1.5rem;  /* gap-6 */
+  --radius: 1rem;
+  --gap: 1.5rem; 
 }
+
 .dark {
-  --bg: #050B09;          /* page */
+  --bg: #050B09;         
 
-  --surface: #0E1714;     /* cards */
+  --surface: #0E1714;    
 
-  --surface-alt: #15211D; /* active states */
+  --surface-alt: #15211D; 
 
   --text: #F3F4F6;
   --text-muted: #94A3B8;
@@ -49,12 +50,10 @@
   --border: #1A2A25;
 }
 
-/*
-.dark {
+
+ /* .dark {
   --bg: #07110F;
-
   --surface: #0D1815;
-
   --surface-alt: #13211D;
 
   --text: #F3F4F6;
@@ -71,8 +70,8 @@
 
   --radius: 1rem;
   --gap: 1.5rem;
-}
-  */
+}  */
+  
 
 
 html,

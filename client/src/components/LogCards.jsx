@@ -2,17 +2,8 @@ import { useState } from "react";
 import { NotebookPen, Bookmark } from "lucide-react";
 import LogCard from "./LogCard";
 
-export default function LogCards({ logs }) {
+export default function LogCards({ logs, savedLogs }) {
   const [activeTab, setActiveTab] = useState("logs");
-
-  const savedFoods = [
-    "Low Fat Milk",
-    "Eggs",
-    "Banana",
-    "Paratha",
-    "Rice",
-    "Paneer",
-  ];
 
   return (
     <div className="bg-[var(--surface)] rounded-lg h-full overflow-y-auto no-scrollbar px-5 pb-5">
@@ -51,7 +42,7 @@ export default function LogCards({ logs }) {
 
       {/* Logged Meals */}
       {activeTab === "logs" && (
-        <div className="space-y-3">
+        <div>
           {logs.map((log, index) => (
             <div
               key={index}
@@ -65,13 +56,13 @@ export default function LogCards({ logs }) {
 
       {/* Saved Meals */}
       {activeTab === "saved" && (
-        <div className="space-y-3">
-          {savedFoods.map((food, index) => (
+        <div>
+          {savedLogs.map((log, index) => (
             <div
               key={index}
-              className="px-4 py-3 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface-alt)] transition-all cursor-pointer"
+              className="rounded-lg overflow-hidden bg-[var(--surface)]"
             >
-              {food}
+              <LogCard log={log} index={index} />
             </div>
           ))}
         </div>
