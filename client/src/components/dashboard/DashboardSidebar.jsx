@@ -2,18 +2,8 @@ import Calendar from "./Calender";
 
 export default function DashboardSidebar() {
   return (
-    <aside
-      className="
-        fixed top-6 right-6 bottom-6
-        w-72
-        overflow-y-auto
-      "
-    >
+    <aside className="w-72 flex-shrink-0">
       <Calendar />
-
-      {/* WaterTracker */}
-
-      {/* DailyGoals */}
     </aside>
   );
 }
