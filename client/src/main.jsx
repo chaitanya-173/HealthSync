@@ -7,7 +7,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { DashboardProvider } from "./context/DashboardContext";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <ThemeProvider>
       <AuthProvider>
         <DashboardProvider>
@@ -15,5 +15,5 @@ createRoot(document.getElementById("root")).render(
         </DashboardProvider>
       </AuthProvider>
     </ThemeProvider>
-  </StrictMode>
+  // </StrictMode>
 );

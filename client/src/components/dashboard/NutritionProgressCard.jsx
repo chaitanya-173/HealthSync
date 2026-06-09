@@ -1,36 +1,48 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useDashboard } from "../../context/DashboardContext";
 
 export default function NutritionProgressCard() {
+  const { summary, goals } = useDashboard();
+
+  // console.log("CARD SUMMARY from nutrition", summary);
+  // console.log("CARD GOALS from nutrition", goals);
+
+  if (!summary || !goals) {
+    return (
+      <div className="w-full h-[205px] rounded-lg bg-[var(--surface)] animate-pulse" />
+    );
+  }
+
   const calories = {
-    current: 1850,
-    goal: 2500,
+    current: summary.totalCalories || 0,
+    goal: goals.calories || 2500,
   };
 
   const macros = [
     {
       label: "Carbs",
-      current: 110,
-      goal: 190,
+      current: summary.totalCarbs || 0,
+      goal: goals.carbs || 250,
       color: "#F59E0B",
       track: "#4B3200",
     },
     {
       label: "Protein",
-      current: 110,
-      goal: 150,
+      current: summary.totalProtein || 0,
+      goal: goals.protein || 150,
       color: "#22C55E",
       track: "#11361C",
     },
     {
       label: "Fat",
-      current: 45,
-      goal: 70,
+      current: summary.totalFat || 0,
+      goal: goals.fat || 70,
       color: "#A855F7",
       track: "#2C1747",
     },
   ];
 
-  const totalGoal = macros[0].goal + macros[1].goal + macros[2].goal;
+  const totalGoal = macros.reduce((sum, m) => sum + m.goal, 0);
 
   const TOTAL_ARC = 345;
   const START = 225;
@@ -60,11 +72,9 @@ export default function NutritionProgressCard() {
 
   return (
     <div className="w-full h-[205px] rounded-lg bg-[var(--surface)] px-6 py-3 flex items-center justify-center gap-12 overflow-hidden">
-      {/* CHART */}
       <div className="relative w-[180px] h-[150px] flex-shrink-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            {/* CARBS TRACK */}
             <Pie
               data={[{ value: 100 }]}
               dataKey="value"
@@ -79,7 +89,6 @@ export default function NutritionProgressCard() {
               <Cell fill={macros[0].track} />
             </Pie>
 
-            {/* CARBS PROGRESS */}
             <Pie
               data={[{ value: 100 }]}
               dataKey="value"
@@ -93,7 +102,6 @@ export default function NutritionProgressCard() {
               <Cell fill={macros[0].color} />
             </Pie>
 
-            {/* PROTEIN TRACK */}
             <Pie
               data={[{ value: 100 }]}
               dataKey="value"
@@ -108,7 +116,6 @@ export default function NutritionProgressCard() {
               <Cell fill={macros[1].track} />
             </Pie>
 
-            {/* PROTEIN PROGRESS */}
             <Pie
               data={[{ value: 100 }]}
               dataKey="value"
@@ -122,7 +129,6 @@ export default function NutritionProgressCard() {
               <Cell fill={macros[1].color} />
             </Pie>
 
-            {/* FAT TRACK */}
             <Pie
               data={[{ value: 100 }]}
               dataKey="value"
@@ -137,7 +143,6 @@ export default function NutritionProgressCard() {
               <Cell fill={macros[2].track} />
             </Pie>
 
-            {/* FAT PROGRESS */}
             <Pie
               data={[{ value: 100 }]}
               dataKey="value"
@@ -153,19 +158,17 @@ export default function NutritionProgressCard() {
           </PieChart>
         </ResponsiveContainer>
 
-        {/* CENTER */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <h2 className="text-[30px] font-bold leading-none">
-            {calories.current}
+            {Math.round(calories.current)}
           </h2>
 
-          <p className="text-xs text-[var(--text-muted)]">/{calories.goal}</p>
+          <p className="text-xs text-[var(--text-muted)]">/ {calories.goal}</p>
 
           <p className="mt-1 text-[11px] text-[var(--text-muted)]">Calories</p>
         </div>
       </div>
 
-      {/* STATS */}
       <div className="flex flex-col gap-3 w-[90px]">
         {macros.map((m) => (
           <div
@@ -178,7 +181,8 @@ export default function NutritionProgressCard() {
             </p>
 
             <p className="text-[15px] font-semibold">
-              {m.current}
+              {Math.round(m.current)}
+
               <span className="text-[var(--text-muted)] font-normal">
                 {" "}
                 / {m.goal}

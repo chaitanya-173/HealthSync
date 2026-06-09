@@ -46,6 +46,24 @@ Rules:
 - If unsure → best estimate
 `;
 
+const parseLocalDate = (value = "") => {
+  const [year, month, day] = value.split("-").map(Number);
+
+  if (!year || !month || !day) {
+    return new Date(value);
+  }
+
+  return new Date(year, month - 1, day);
+};
+
+const formatLocalDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 export const logEntry = async (req, res) => {
   try {
     const { text } = req.body;
@@ -227,29 +245,54 @@ export const getWeeklyLogs = async (req, res) => {
     const logs = await Log.find({
       userId: req.user._id,
       createdAt: { $gte: last7Days },
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: 1 });
 
     const grouped = {};
 
-    // init all 7 days (important)
-    for (let i = 0; i < 7; i++) {
+    for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(today.getDate() - i);
-      const key = d.toISOString().split("T")[0];
+      d.setHours(0, 0, 0, 0);
 
-      grouped[key] = [];
+      const key = formatLocalDate(d);
+
+      grouped[key] = {
+        date: key,
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        meals: 0,
+        waterCups: 0,
+        waterGoalCups: req.user.nutritionGoals?.waterCups || 10,
+        logs: [],
+      };
     }
 
-    // fill data
     logs.forEach((log) => {
-      const key = new Date(log.createdAt).toISOString().split("T")[0];
+      const key = formatLocalDate(new Date(log.createdAt));
 
       if (grouped[key]) {
-        grouped[key].push(log);
+        const total = log.result?.total || {};
+
+        grouped[key].calories += total.calories || 0;
+        grouped[key].protein += total.protein || 0;
+        grouped[key].carbs += total.carbs || 0;
+        grouped[key].fat += total.fat || 0;
+        grouped[key].meals += 1;
+        grouped[key].logs.push(log);
       }
     });
 
-    return successResponse(res, "Weekly logs fetched", grouped);
+    const days = Object.values(grouped).map((day) => ({
+      ...day,
+      calories: Math.round(day.calories),
+      protein: Math.round(day.protein),
+      carbs: Math.round(day.carbs),
+      fat: Math.round(day.fat),
+    }));
+
+    return successResponse(res, "Weekly logs fetched", days);
 
   } catch (error) {
     return errorResponse(res, error.message, 500);
@@ -264,10 +307,10 @@ export const getLogsByDay = async (req, res) => {
       return errorResponse(res, "Date is required", 400);
     }
 
-    const start = new Date(date);
+    const start = parseLocalDate(date);
     start.setHours(0, 0, 0, 0);
 
-    const end = new Date(date);
+    const end = parseLocalDate(date);
     end.setHours(23, 59, 59, 999);
 
     const logs = await Log.find({
@@ -289,7 +332,7 @@ export const getSummary = async (req, res) => {
   try {
     const { date } = req.query;
 
-    const targetDate = date ? new Date(date) : new Date();
+    const targetDate = date ? parseLocalDate(date) : new Date();
 
     const start = new Date(targetDate);
     start.setHours(0, 0, 0, 0);

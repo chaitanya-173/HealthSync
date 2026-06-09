@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export default function WeeklyProgressCard({ data }) {
-  const days = data.length;
+  const days = Math.max(data.length, 1);
 
   const avgCalories = Math.round(
     data.reduce((s, d) => s + d.calories, 0) / days,

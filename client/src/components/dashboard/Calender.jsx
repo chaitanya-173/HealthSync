@@ -3,7 +3,8 @@ import { useMemo, useState } from "react";
 import { useDashboard } from "../../context/DashboardContext";
 
 export default function Calendar() {
-  const { selectedDate, setSelectedDate, logs } = useDashboard();
+  const { selectedDate, setSelectedDate, logs, formatLocalDate } =
+    useDashboard();
 
   const [currentMonth, setCurrentMonth] = useState(
     new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1),
@@ -19,7 +20,7 @@ export default function Calendar() {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
 
   const datesWithLogs = [
-    ...new Set(logs.map((log) => log.createdAt.split("T")[0])),
+    ...new Set(logs.map((log) => formatLocalDate(new Date(log.createdAt)))),
   ];
 
   const calendarDays = useMemo(() => {
@@ -48,7 +49,7 @@ export default function Calendar() {
   const isSameDay = (d1, d2) => d1?.toDateString() === d2?.toDateString();
 
   const hasLogs = (date) =>
-    datesWithLogs.includes(date.toISOString().split("T")[0]);
+    datesWithLogs.includes(formatLocalDate(date));
 
   const isFutureDate = (date) => {
     const todayCopy = new Date();

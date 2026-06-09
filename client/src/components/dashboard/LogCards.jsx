@@ -45,10 +45,10 @@ export default function LogCards({ logs, savedLogs }) {
         <div>
           {logs.map((log, index) => (
             <div
-              key={index}
-              className="rounded-lg overflow-hidden bg-[var(--surface)]"
+              key={log._id || index}
+              className="rounded-lg bg-[var(--surface)]"
             >
-              <LogCard log={log} index={index} />
+              <LogCard log={log} index={index} mode="log" />
             </div>
           ))}
         </div>
@@ -59,10 +59,10 @@ export default function LogCards({ logs, savedLogs }) {
         <div>
           {savedLogs.map((log, index) => (
             <div
-              key={index}
-              className="rounded-lg overflow-hidden bg-[var(--surface)]"
+              key={log._id || index}
+              className="rounded-lg bg-[var(--surface)]"
             >
-              <LogCard log={log} index={index} />
+              <LogCard log={log} index={index} mode="saved" />
             </div>
           ))}
         </div>

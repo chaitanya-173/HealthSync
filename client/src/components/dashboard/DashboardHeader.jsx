@@ -1,9 +1,13 @@
 import { Zap } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+
 import DateBox from "./DateBox";
 import WeekSelector from "./WeekSelector";
 import NutritionProgressCard from "./NutritionProgressCard";
 
 export default function DashboardHeader() {
+  const { user } = useAuth();
+
   const hour = new Date().getHours();
 
   const greeting =
@@ -13,16 +17,27 @@ export default function DashboardHeader() {
     <div className="grid grid-cols-[1fr_380px] gap-6">
       <div className="flex flex-col gap-4">
         <div>
-          <p className="text-sm text-[var(--text-muted)]">{greeting},</p>
-          <h2 className="text-2xl font-semibold">Chaitanya</h2>
+          <p className="text-sm text-[var(--text-muted)]">
+            {greeting},
+          </p>
+
+          <h2 className="text-2xl font-semibold">
+            {user?.name || "User"}
+          </h2>
         </div>
 
         <div className="flex items-center justify-between">
           <DateBox />
 
           <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-[var(--surface)]">
-            <Zap size={15} className="text-[var(--warning)]" />
-            <span className="text-sm font-medium">7 Day Streak</span>
+            <Zap
+              size={15}
+              className="text-[var(--warning)]"
+            />
+
+            <span className="text-sm font-medium">
+              7 Day Streak
+            </span>
           </div>
         </div>
 
@@ -30,7 +45,7 @@ export default function DashboardHeader() {
       </div>
 
       <div className="flex">
-        <NutritionProgressCard />
+        <NutritionProgressCard/>
       </div>
     </div>
   );

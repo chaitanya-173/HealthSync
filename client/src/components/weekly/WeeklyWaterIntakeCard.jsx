@@ -1,13 +1,19 @@
-import { waterIntakeData } from "./waterIntakeData";
+export default function WaterIntakeCard({ data = [] }) {
+  const waterIntakeData = data.map((day) => ({
+    date: day.date,
+    cups: day.waterCups || 0,
+    goalCups: day.waterGoalCups || 10,
+  }));
 
-export default function WaterIntakeCard() {
+  const totalDays = Math.max(waterIntakeData.length, 1);
+
   const avgCups =
     waterIntakeData.reduce((s, d) => s + d.cups, 0) /
-    waterIntakeData.length;
+    totalDays;
 
   const avgGoalCups =
     waterIntakeData.reduce((s, d) => s + d.goalCups, 0) /
-    waterIntakeData.length;
+    totalDays;
 
   const avgVolume = (avgCups * 0.25).toFixed(1);
 
