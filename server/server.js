@@ -8,6 +8,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
 import savedRoutes from "./routes/savedRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/log", logRoutes);
 app.use("/api/saved", savedRoutes);
+app.use("/api/user", userRoutes);
 
 app.use(errorHandler);
 

@@ -287,12 +287,22 @@ export const getLogsByDay = async (req, res) => {
 
 export const getSummary = async (req, res) => {
   try {
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
+    const { date } = req.query;
+
+    const targetDate = date ? new Date(date) : new Date();
+
+    const start = new Date(targetDate);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date(targetDate);
+    end.setHours(23, 59, 59, 999);
 
     const logs = await Log.find({
       userId: req.user._id,
-      createdAt: { $gte: startOfDay },
+      createdAt: {
+        $gte: start,
+        $lte: end,
+      },
     });
 
     let totalCalories = 0;

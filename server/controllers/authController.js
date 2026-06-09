@@ -36,6 +36,7 @@ export const signup = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      nutritionGoals: user.nutritionGoals,
     });
   } catch (error) {
     return errorResponse(res, error.message, 500);
@@ -66,7 +67,9 @@ export const login = async (req, res) => {
     return successResponse(res, "Login successful", {
       token,
       id: user._id,
+      name: user.name,
       email: user.email,
+      nutritionGoals: user.nutritionGoals,
     });
   } catch (error) {
     return errorResponse(res, error.message, 500);
