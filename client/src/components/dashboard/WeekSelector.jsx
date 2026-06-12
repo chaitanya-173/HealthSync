@@ -48,12 +48,7 @@ export default function WeekSelector() {
 
   return (
     <div
-      className="
-        flex items-center justify-between
-        px-4 py-3
-        rounded-lg
-        bg-[var(--surface)]
-      "
+      className="flex items-center justify-between px-4 py-3 rounded-lg bg-[var(--surface)]"
     >
       {weekDays.map((d, index) => {
         const selected = isSameDay(d.date, selectedDate);
