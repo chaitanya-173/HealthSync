@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import {
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       setLoadingUser(true);
       const res = await fetchMeService();
       if (res.data?.success) setUser(res.data.data);
-    } catch (err) {
+    } catch {
       setUser(null);
     } finally {
       setLoadingUser(false);
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }) => {
       const res = await logoutService();
       setUser(null);
       toast.success(res.data?.message || "Logged out");
-    } catch (err) {
+    } catch {
       toast.error("Logout failed");
     }
   };

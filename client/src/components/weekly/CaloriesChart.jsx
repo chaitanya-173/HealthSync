@@ -8,6 +8,28 @@ import {
   CartesianGrid,
 } from "recharts";
 
+function CustomTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null;
+
+  const item = payload[0].payload;
+
+  return (
+    <div
+      className="
+        bg-[var(--surface-alt)]
+        border border-white/5
+        rounded-lg
+        px-4 py-3
+        shadow-xl
+      "
+    >
+      <p className="text-xs text-[var(--text-muted)] mb-1">{item.fullDate}</p>
+
+      <p className="font-semibold text-[#22C55E]">{item.calories} Calories</p>
+    </div>
+  );
+}
+
 export default function CaloriesChart({ data }) {
   const chartData = data.map((d) => ({
     ...d,
@@ -21,28 +43,6 @@ export default function CaloriesChart({ data }) {
       year: "numeric",
     }),
   }));
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (!active || !payload?.length) return null;
-
-    const item = payload[0].payload;
-
-    return (
-      <div
-        className="
-          bg-[var(--surface-alt)]
-          border border-white/5
-          rounded-lg
-          px-4 py-3
-          shadow-xl
-        "
-      >
-        <p className="text-xs text-[var(--text-muted)] mb-1">{item.fullDate}</p>
-
-        <p className="font-semibold text-[#22C55E]">{item.calories} Calories</p>
-      </div>
-    );
-  };
 
   return (
     <div className="bg-[var(--surface)] rounded-lg p-5 h-[240px]">

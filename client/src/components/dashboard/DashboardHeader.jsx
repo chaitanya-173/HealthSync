@@ -4,9 +4,11 @@ import { useAuth } from "../../context/AuthContext";
 import DateBox from "./DateBox";
 import WeekSelector from "./WeekSelector";
 import NutritionProgressCard from "./NutritionProgressCard";
+import { useDashboard } from "../../context/DashboardContext";
 
 export default function DashboardHeader() {
   const { user } = useAuth();
+  const { streak } = useDashboard();
 
   const hour = new Date().getHours();
 
@@ -36,7 +38,9 @@ export default function DashboardHeader() {
             />
 
             <span className="text-sm font-medium">
-              7 Day Streak
+              {streak > 0
+  ? `${streak} Day Streak`
+  : "Start your streak"}
             </span>
           </div>
         </div>

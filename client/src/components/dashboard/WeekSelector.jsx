@@ -1,32 +1,50 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useDashboard } from "../../context/DashboardContext";
 
-const days = ["S", "M", "T", "W", "T", "F", "S"];
+const days = ["M", "T", "W", "T", "F", "S", "S"];
+
+const getStartOfWeek = (date) => {
+  const start = new Date(date);
+  const day = start.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+
+  start.setDate(start.getDate() + diff);
+  start.setHours(0, 0, 0, 0);
+
+  return start;
+};
 
 export default function WeekSelector() {
-  const [weekDays, setWeekDays] = useState([]);
-
   const { selectedDate, setSelectedDate } = useDashboard();
 
-  useEffect(() => {
+  const weekDays = useMemo(() => {
     const temp = [];
 
-    for (let i = 6; i >= 0; i--) {
-      const d = new Date(selectedDate);
+    const start = getStartOfWeek(selectedDate);
 
-      d.setDate(selectedDate.getDate() - i);
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(start);
+
+      d.setDate(start.getDate() + i);
 
       temp.push({
         date: d,
-        day: days[d.getDay()],
+        day: days[i],
         dayNum: d.getDate(),
       });
     }
 
-    setWeekDays(temp);
+    return temp;
   }, [selectedDate]);
 
   const isSameDay = (d1, d2) => d1.toDateString() === d2.toDateString();
+
+  const isFutureDate = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return date > today;
+  };
 
   return (
     <div
@@ -43,10 +61,12 @@ export default function WeekSelector() {
         return (
           <button
             key={index}
+            disabled={isFutureDate(d.date)}
             onClick={() => setSelectedDate(d.date)}
             className="
               flex flex-col items-center
               gap-1.5
+              disabled:opacity-30 disabled:cursor-not-allowed
             "
           >
             <span className="text-xs text-[var(--text-muted)]">{d.day}</span>

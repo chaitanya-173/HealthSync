@@ -25,12 +25,12 @@ const userSchema = new mongoose.Schema(
     nutritionGoals: {
       calories: {
         type: Number,
-        default: 2500,
+        default: 2000,
       },
 
       protein: {
         type: Number,
-        default: 150,
+        default: 125,
       },
 
       carbs: {
@@ -40,10 +40,22 @@ const userSchema = new mongoose.Schema(
 
       fat: {
         type: Number,
-        default: 70,
+        default: 56,
       },
 
       waterCups: {
+        type: Number,
+        default: 10,
+      },
+    },
+
+    waterSettings: {
+      dailyLiters: {
+        type: Number,
+        default: 2.5,
+      },
+
+      dailyCups: {
         type: Number,
         default: 10,
       },

@@ -13,7 +13,6 @@ export default function Home() {
           <InputBar />
         </div>
       </div>
-
       <DashboardSidebar />
     </div>
   );

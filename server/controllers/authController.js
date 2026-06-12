@@ -45,9 +45,8 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body; // identifier = email OR username
+    const { email, password } = req.body;
 
-    // Find user by email or username
     const user = await UserModel.findOne({ email }).select("+password");
 
     if (!user) return errorResponse(res, "Invalid credentials", 400);

@@ -70,37 +70,6 @@ export default function Signup() {
             )}
           </div>
 
-          {/* Username */}
-          <div>
-            <label className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
-              Username
-            </label>
-            <input
-              {...register("username", {
-                required: "Username required",
-                minLength: { value: 3, message: "At least 3 chars" },
-                maxLength: { value: 20, message: "Max 20 chars" },
-                pattern: {
-                  value: /^[a-zA-Z0-9_]+$/,
-                  message: "Letters, numbers & _ only",
-                },
-              })}
-              placeholder="Enter username"
-              className="w-full mt-1 px-4 py-3 rounded-lg 
-              bg-[var(--surface)] border border-[var(--border)] 
-              text-[var(--text)] text-sm
-              focus:outline-none focus:ring-2 focus:ring-[var(--primary)] 
-              focus:border-transparent
-              transition-all duration-200
-              hover:border-[var(--primary)]/40"
-            />
-            {errors.username && (
-              <p className="text-xs text-red-500 mt-1">
-                {errors.username.message}
-              </p>
-            )}
-          </div>
-
           {/* Email */}
           <div>
             <label className="text-xs uppercase tracking-wide text-[var(--text-muted)]">

@@ -4,8 +4,6 @@ import { useAuth } from "../../context/AuthContext";
 import {
   User,
   Pencil,
-  Heart,
-  MapPin,
   MessageSquare,
   LogOut,
 } from "lucide-react";
@@ -67,8 +65,6 @@ export default function ProfileDropdown({ collapsed, open, setOpen }) {
           {/* Options */}
           <div className="py-2">
             <MenuItem icon={<Pencil size={16} />} text="Edit Profile" onClick={() => navigate("/edit-profile")} />
-            <MenuItem icon={<Heart size={16} />} text="Favourites" onClick={() => navigate("/favourites")} />
-            <MenuItem icon={<MapPin size={16} />} text="Location" onClick={() => navigate("/edit-profile")} />
             <MenuItem icon={<MessageSquare size={16} />} text="Feedback" onClick={() => alert("Open feedback")} />
           </div>
 

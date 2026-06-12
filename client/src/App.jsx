@@ -5,6 +5,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import WeeklySummary from "./pages/WeeklySummary";
+import DailyGoals from "./pages/DailyGoals";
+import WaterTracker from "./pages/WaterTracker";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import NewAppLayout from "./layouts/NewAppLayout";
@@ -25,6 +27,16 @@ export default function App() {
             <Route
               path="/weekly"
               element={<WeeklySummary />}
+            />
+
+            <Route
+              path="/goals"
+              element={<DailyGoals />}
+            />
+
+            <Route
+              path="/water"
+              element={<WaterTracker />}
             />
           </Route>
         </Route>

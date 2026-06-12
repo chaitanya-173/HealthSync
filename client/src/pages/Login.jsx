@@ -43,7 +43,7 @@ export default function Login() {
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Identifier */}
+          {/* Email */}
           <div>
             <label className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
               Email 
@@ -59,9 +59,9 @@ export default function Login() {
               transition-all duration-200
               hover:border-[var(--primary)]/40"
             />
-            {errors.identifier && (
+            {errors.email && (
               <p className="text-xs text-red-500 mt-1">
-                {errors.identifier.message}
+                {errors.email.message}
               </p>
             )}
           </div>

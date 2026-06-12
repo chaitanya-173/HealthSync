@@ -8,6 +8,42 @@ import {
   CartesianGrid,
 } from "recharts";
 
+function CustomTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null;
+
+  const item = payload[0].payload;
+
+  return (
+    <div
+      className="
+        bg-[var(--surface-alt)]
+        border border-white/5
+        rounded-lg
+        px-4 py-3
+        shadow-xl
+      "
+    >
+      <p className="text-xs text-[var(--text-muted)] mb-2">
+        {item.fullDate}
+      </p>
+
+      <div className="space-y-1 text-sm">
+        <p style={{ color: "#F59E0B" }}>
+          Carbs: {item.carbs}g
+        </p>
+
+        <p style={{ color: "#22C55E" }}>
+          Protein: {item.protein}g
+        </p>
+
+        <p style={{ color: "#A855F7" }}>
+          Fat: {item.fat}g
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function MacroChart({ data }) {
   const chartData = data.map((d) => ({
     ...d,
@@ -21,42 +57,6 @@ export default function MacroChart({ data }) {
       year: "numeric",
     }),
   }));
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (!active || !payload?.length) return null;
-
-    const item = payload[0].payload;
-
-    return (
-      <div
-        className="
-          bg-[var(--surface-alt)]
-          border border-white/5
-          rounded-lg
-          px-4 py-3
-          shadow-xl
-        "
-      >
-        <p className="text-xs text-[var(--text-muted)] mb-2">
-          {item.fullDate}
-        </p>
-
-        <div className="space-y-1 text-sm">
-          <p style={{ color: "#F59E0B" }}>
-            Carbs: {item.carbs}g
-          </p>
-
-          <p style={{ color: "#22C55E" }}>
-            Protein: {item.protein}g
-          </p>
-
-          <p style={{ color: "#A855F7" }}>
-            Fat: {item.fat}g
-          </p>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="bg-[var(--surface)] rounded-lg p-5 h-[290px]">

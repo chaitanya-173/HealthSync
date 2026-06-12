@@ -64,6 +64,7 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
     fetchLogs,
     fetchSummary,
     fetchSavedLogs,
+    fetchStreak,
     formatLocalDate,
     setSelectedDate,
   } = useDashboard();
@@ -95,7 +96,12 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
   const [dateTime, setDateTime] = useState(toInputDateTime(createdAt));
 
   const refreshDashboard = async (date = selectedDate) => {
-    await Promise.all([fetchLogs(date), fetchSummary(date), fetchSavedLogs()]);
+    await Promise.all([
+      fetchLogs(date),
+      fetchSummary(date),
+      fetchSavedLogs(),
+      fetchStreak(),
+    ]);
   };
 
   const menuItems = useMemo(() => {

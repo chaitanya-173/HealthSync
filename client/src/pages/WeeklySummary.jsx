@@ -44,13 +44,13 @@ export default function WeeklySummary() {
         <div className="h-[240px] rounded-lg bg-[var(--surface)] animate-pulse" />
       )}
 
-      {!loading && weeklyData.length === 0 && (
+      {!loading && weeklyData.every((day) => day.meals === 0) && (
         <div className="rounded-lg bg-[var(--surface)] p-6 text-sm text-[var(--text-muted)]">
-          No nutrition logs found for the last 7 days.
+          Not enough data to generate weekly insights.
         </div>
       )}
 
-      {!loading && weeklyData.length > 0 && (
+      {!loading && weeklyData.some((day) => day.meals > 0) && (
         <>
           <div className="grid grid-cols-[380px_1fr] gap-6">
             <WeeklyProgressCard data={weeklyData} />

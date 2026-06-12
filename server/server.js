@@ -9,15 +9,31 @@ import authRoutes from "./routes/authRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
 import savedRoutes from "./routes/savedRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import waterRoutes from "./routes/waterRoutes.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
+const configuredOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const isAllowedDevOrigin = (origin = "") => {
+  return /^http:\/\/(localhost|127\.0\.0\.1|\d{1,3}(?:\.\d{1,3}){3}):5173$/.test(origin);
+};
 
 // Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin(origin, callback) {
+      if (!origin || configuredOrigins.includes(origin) || isAllowedDevOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   }),
 );
@@ -38,6 +54,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/log", logRoutes);
 app.use("/api/saved", savedRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/water", waterRoutes);
 
 app.use(errorHandler);
 

@@ -11,7 +11,6 @@ export default function EditProfile() {
   } = useForm({
     defaultValues: {
       name: user?.name || "",
-      username: user?.username || "",
       email: user?.email || "",
       phone: user?.phone || "",
       location: user?.location || "",
@@ -51,25 +50,6 @@ export default function EditProfile() {
               {errors.name && (
                 <p className="text-xs text-red-500 mt-1">
                   {errors.name.message}
-                </p>
-              )}
-            </div>
-
-            {/* Username */}
-            <div>
-              <label className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
-                Username
-              </label>
-              <input
-                {...register("username", { required: "Username required" })}
-                className="w-full mt-1 px-4 py-3 rounded-lg 
-                bg-[var(--bg)] border border-[var(--border)] 
-                text-sm focus:outline-none 
-                focus:ring-2 focus:ring-[var(--primary)]"
-              />
-              {errors.username && (
-                <p className="text-xs text-red-500 mt-1">
-                  {errors.username.message}
                 </p>
               )}
             </div>

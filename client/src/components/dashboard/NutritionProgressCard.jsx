@@ -15,7 +15,7 @@ export default function NutritionProgressCard() {
 
   const calories = {
     current: summary.totalCalories || 0,
-    goal: goals.calories || 2500,
+    goal: goals.calories || 2000,
   };
 
   const macros = [
@@ -29,14 +29,14 @@ export default function NutritionProgressCard() {
     {
       label: "Protein",
       current: summary.totalProtein || 0,
-      goal: goals.protein || 150,
+      goal: goals.protein || 125,
       color: "#22C55E",
       track: "#11361C",
     },
     {
       label: "Fat",
       current: summary.totalFat || 0,
-      goal: goals.fat || 70,
+      goal: goals.fat || 56,
       color: "#A855F7",
       track: "#2C1747",
     },

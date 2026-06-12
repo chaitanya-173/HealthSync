@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   createContext,
   useCallback,
@@ -10,6 +11,8 @@ import { getLogsByDay } from "../services/logService";
 import { getSavedEntries } from "../services/savedService";
 import { getSummary } from "../services/summaryService";
 import { getGoals } from "../services/userService";
+import { getStreak } from "../services/logService";
+import { getDailyWater } from "../services/waterService";
 
 const DashboardContext = createContext();
 
@@ -28,6 +31,8 @@ export function DashboardProvider({ children }) {
   const [savedLogs, setSavedLogs] = useState([]);
   const [summary, setSummary] = useState(null);
   const [goals, setGoals] = useState(null);
+  const [water, setWater] = useState(null);
+  const [streak, setStreak] = useState(0);
 
   const fetchLogs = useCallback(async (date) => {
     try {
@@ -77,30 +82,53 @@ export function DashboardProvider({ children }) {
     }
   }, []);
 
+  const fetchWater = useCallback(async (date) => {
+    try {
+      const formattedDate = formatLocalDate(date);
+      const res = await getDailyWater(formattedDate);
+
+      setWater(res.data.data);
+    } catch (error) {
+      console.error("WATER ERROR", error.response?.data || error);
+      setWater(null);
+    }
+  }, []);
+
+  const fetchStreak = useCallback(async () => {
+    try {
+      const res = await getStreak();
+
+      setStreak(res.data.data?.streak || 0);
+    } catch (error) {
+      console.error("STREAK ERROR", error.response?.data || error);
+      setStreak(0);
+    }
+  }, []);
+
   useEffect(() => {
     if (loadingUser) return;
 
     if (!user) {
-      // Dashboard state belongs to the signed-in session.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLogs([]);
       setSavedLogs([]);
       setSummary(null);
       setGoals(null);
+      setWater(null);
+      setStreak(0);
       return;
     }
 
     fetchLogs(selectedDate);
     fetchSummary(selectedDate);
-  }, [fetchLogs, fetchSummary, loadingUser, selectedDate, user]);
+    fetchWater(selectedDate);
+  }, [fetchLogs, fetchSummary, fetchWater, loadingUser, selectedDate, user]);
 
   useEffect(() => {
     if (loadingUser || !user) return;
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchGoals();
     fetchSavedLogs();
-  }, [fetchGoals, fetchSavedLogs, loadingUser, user]);
+    fetchStreak();
+  }, [fetchGoals, fetchSavedLogs, fetchStreak, loadingUser, user]);
 
   const value = {
     selectedDate,
@@ -120,6 +148,14 @@ export function DashboardProvider({ children }) {
 
     goals,
     setGoals,
+
+    water,
+    setWater,
+    fetchWater,
+
+    streak,
+    setStreak,
+    fetchStreak,
 
     fetchSummary,
     fetchGoals,

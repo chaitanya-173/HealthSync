@@ -10,6 +10,7 @@ export default function InputBar() {
     fetchLogs,
     fetchSummary,
     fetchSavedLogs,
+    fetchStreak,
     formatLocalDate,
   } = useDashboard();
   const [text, setText] = useState("");
@@ -47,6 +48,7 @@ export default function InputBar() {
         fetchLogs(selectedDate),
         fetchSummary(selectedDate),
         fetchSavedLogs(),
+        fetchStreak(),
       ]);
 
       toast.success("Food logged");

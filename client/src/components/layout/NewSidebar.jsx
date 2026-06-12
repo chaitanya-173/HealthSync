@@ -1,7 +1,6 @@
 import {
   Target,
   BarChart3,
-  Bell,
   Droplet,
   Sun,
   Moon,
@@ -17,7 +16,6 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/" },
   { label: "Daily Goals", icon: Target, path: "/goals" },
   { label: "Weekly Summary", icon: BarChart3, path: "/weekly" },
-  { label: "Reminders", icon: Bell, path: "/reminders" },
   { label: "Water Tracker", icon: Droplet, path: "/water" },
 ];
 

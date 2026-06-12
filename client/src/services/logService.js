@@ -20,6 +20,11 @@ export const getWeeklyLogs = async () => {
   return await api.get("/api/log/weekly-logs");
 };
 
+// Get current food logging streak
+export const getStreak = async () => {
+  return await api.get("/api/log/streak");
+};
+
 // Update AI log
 export const updateLog = async (id, payload) => {
   return await api.put(`/api/log/${id}`, payload);

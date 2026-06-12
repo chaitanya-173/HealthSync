@@ -15,10 +15,10 @@ export default function AuthPage() {
         ) : (
           <div className="max-w-md px-10">
             <h1 className="text-4xl font-bold mb-4">
-              Welcome to BookLoop 📚
+              Welcome to HealthSync
             </h1>
             <p className="text-[var(--text-muted)]">
-              Discover, buy and sell books near you. Simple, fast and free.
+              Track meals, macros, hydration, and goals in one focused dashboard.
             </p>
           </div>
         )}
@@ -29,10 +29,10 @@ export default function AuthPage() {
         {isSignup ? (
           <div className="max-w-md px-10">
             <h1 className="text-4xl font-bold mb-4">
-              Join BookLoop 🚀
+              Join HealthSync
             </h1>
             <p className="text-[var(--text-muted)]">
-              Create your account and start your journey.
+              Create your account and start building consistent health habits.
             </p>
           </div>
         ) : (

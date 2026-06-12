@@ -24,14 +24,14 @@ export default function AuthLayout({ children, type = "login" }) {
 
           <h1 className="text-4xl font-bold leading-tight">
             {type === "signup"
-              ? "Share your books 📚"
-              : "Welcome back 👋"}
+              ? "Start with HealthSync"
+              : "Welcome back"}
           </h1>
 
           <p className="text-[var(--text-muted)] text-lg">
             {type === "signup"
-              ? "Sell, donate, and discover books near you. BookLoop makes it simple and fast."
-              : "Continue your journey. Find books, connect with sellers and explore your next read."}
+              ? "Create your account to track nutrition, hydration, goals, and weekly progress."
+              : "Continue tracking your meals, macros, hydration, and daily health goals."}
           </p>
 
           {/* Feature blocks */}
@@ -39,36 +39,36 @@ export default function AuthLayout({ children, type = "login" }) {
 
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-[var(--bg)] flex items-center justify-center">
-                📦
+                1
               </div>
               <div>
-                <p className="font-medium">Buy & Sell Easily</p>
+                <p className="font-medium">Log Meals Quickly</p>
                 <p className="text-sm text-[var(--text-muted)]">
-                  Connect directly with buyers and sellers nearby.
+                  Add food entries and keep your nutrition history organized.
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-[var(--bg)] flex items-center justify-center">
-                🎯
+                2
               </div>
               <div>
-                <p className="font-medium">Find What You Need</p>
+                <p className="font-medium">Set Daily Goals</p>
                 <p className="text-sm text-[var(--text-muted)]">
-                  Search books by category, price and location.
+                  Keep calories, protein, carbs, fat, and water in sync.
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-[var(--bg)] flex items-center justify-center">
-                ⚡
+                3
               </div>
               <div>
-                <p className="font-medium">Fast & Simple</p>
+                <p className="font-medium">Review Progress</p>
                 <p className="text-sm text-[var(--text-muted)]">
-                  No middlemen. Just connect and trade instantly.
+                  See daily streaks and weekly insights from your dashboard.
                 </p>
               </div>
             </div>

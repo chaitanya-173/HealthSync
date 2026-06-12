@@ -1,6 +1,7 @@
 import groq from "../config/groq.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 import Log from "../models/LogModel.js";
+import WaterLog from "../models/WaterLogModel.js";
 
 const buildPrompt = (text) => `
 You are a nutrition and fitness assistant.
@@ -247,6 +248,14 @@ export const getWeeklyLogs = async (req, res) => {
       createdAt: { $gte: last7Days },
     }).sort({ createdAt: 1 });
 
+    const waterLogs = await WaterLog.find({
+      userId: req.user._id,
+      date: {
+        $gte: formatLocalDate(last7Days),
+        $lte: formatLocalDate(today),
+      },
+    });
+
     const grouped = {};
 
     for (let i = 6; i >= 0; i--) {
@@ -284,6 +293,14 @@ export const getWeeklyLogs = async (req, res) => {
       }
     });
 
+    waterLogs.forEach((log) => {
+      if (grouped[log.date]) {
+        grouped[log.date].waterCups = log.cups || 0;
+        grouped[log.date].waterGoalCups =
+          log.goalCups || req.user.waterSettings?.dailyCups || req.user.nutritionGoals?.waterCups || 10;
+      }
+    });
+
     const days = Object.values(grouped).map((day) => ({
       ...day,
       calories: Math.round(day.calories),
@@ -294,6 +311,37 @@ export const getWeeklyLogs = async (req, res) => {
 
     return successResponse(res, "Weekly logs fetched", days);
 
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+export const getStreak = async (req, res) => {
+  try {
+    const today = new Date();
+    const lookbackStart = new Date(today);
+    lookbackStart.setDate(today.getDate() - 365);
+    lookbackStart.setHours(0, 0, 0, 0);
+
+    const logs = await Log.find({
+      userId: req.user._id,
+      createdAt: { $gte: lookbackStart },
+    }).select("createdAt");
+
+    const loggedDates = new Set(
+      logs.map((log) => formatLocalDate(new Date(log.createdAt))),
+    );
+
+    let streak = 0;
+    const cursor = new Date(today);
+    cursor.setHours(0, 0, 0, 0);
+
+    while (loggedDates.has(formatLocalDate(cursor))) {
+      streak += 1;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+
+    return successResponse(res, "Streak fetched", { streak });
   } catch (error) {
     return errorResponse(res, error.message, 500);
   }
