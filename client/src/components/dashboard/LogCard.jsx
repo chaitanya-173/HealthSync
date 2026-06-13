@@ -278,7 +278,7 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
 
   return (
     <div
-      className={`${index % 2 === 0 ? "bg-[var(--surface-alt)]" : ""} transition-colors duration-200 hover:bg-[var(--surface-alt)]`}
+      className={`${index % 2 === 0 ? "bg-[var(--surface-alt)]" : ""} transition-colors duration-200 hover:bg-[var(--surface-alt)] rounded-lg`}
     >
       <div
         onClick={() => setExpanded((value) => !value)}

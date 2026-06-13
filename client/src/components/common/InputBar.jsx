@@ -61,9 +61,9 @@ export default function InputBar() {
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="fixed bottom-6 left-[calc(50%-24px)] -translate-x-1/2 w-full max-w-2xl px-6"
-    >
+  onSubmit={handleSubmit}
+  className="w-full max-w-2xl mx-auto"
+>
       <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--surface)]">
         <button
           type="button"

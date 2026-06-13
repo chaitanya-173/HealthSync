@@ -77,15 +77,7 @@ export default function Calendar() {
     currentMonth.getFullYear() === today.getFullYear();
 
   return (
-    <div
-      className="
-      w-full
-      h-fit
-        bg-[var(--surface)]
-        rounded-lg
-        p-4
-      "
-    >
+    <div className="w-full h-fit bg-[var(--surface)] rounded-lg p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold">{monthName}</h3>
@@ -220,7 +212,7 @@ export default function Calendar() {
                 />
               )}
 
-              <span className="relative z-10">{date.getDate()}</span>
+              <span className="relative">{date.getDate()}</span>
             </button>
           );
         })}

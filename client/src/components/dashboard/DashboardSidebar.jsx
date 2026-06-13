@@ -7,7 +7,7 @@ export default function DashboardSidebar() {
   const calendarKey = `${selectedDate.getFullYear()}-${selectedDate.getMonth()}`;
 
   return (
-    <aside className="w-72 flex-shrink-0">
+    <aside className="w-72 flex-shrink-0 h-[calc(100vh-48px)] flex flex-col gap-2">
       <Calendar key={calendarKey} />
       <DashboardWaterCard />
     </aside>

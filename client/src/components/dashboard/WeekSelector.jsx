@@ -72,7 +72,7 @@ export default function WeekSelector() {
                 rounded-full
                 flex items-center justify-center
                 text-sm font-semibold
-                transition-all duration-200
+                transition-all duration-200 hover:bg-[var(--primary)]
 
                 ${
                   selected
