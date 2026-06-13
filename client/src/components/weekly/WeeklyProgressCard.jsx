@@ -1,6 +1,8 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useDashboard } from "../../context/DashboardContext";
 
 export default function WeeklyProgressCard({ data }) {
+  const { goals } = useDashboard();
   const days = Math.max(data.length, 1);
 
   const avgCalories = Math.round(
@@ -8,32 +10,28 @@ export default function WeeklyProgressCard({ data }) {
   );
 
   const avgProtein = Math.round(data.reduce((s, d) => s + d.protein, 0) / days);
-
   const avgCarbs = Math.round(data.reduce((s, d) => s + d.carbs, 0) / days);
-
   const avgFat = Math.round(data.reduce((s, d) => s + d.fat, 0) / days);
-
-  const caloriesGoal = 2500;
 
   const macros = [
     {
       label: "Carbs (g)",
       current: avgCarbs,
-      goal: 190,
+      goal: goals?.carbs || 250,
       color: "#F59E0B",
       track: "#4B3200",
     },
     {
       label: "Protein (g)",
       current: avgProtein,
-      goal: 150,
+      goal: goals?.protein || 125,
       color: "#22C55E",
       track: "#11361C",
     },
     {
       label: "Fat (g)",
       current: avgFat,
-      goal: 70,
+      goal: goals?.fat || 56,
       color: "#A855F7",
       track: "#2C1747",
     },
@@ -153,10 +151,9 @@ export default function WeeklyProgressCard({ data }) {
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold">{avgCalories}</h2>
-
-          <p className="text-xs text-[var(--text-muted)]">/ {caloriesGoal}</p>
-
-          <p className="text-xs text-[var(--text-muted)] mt-1">Avg Calories</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">
+            Avg Calories (Kcal)
+          </p>
         </div>
       </div>
 
@@ -171,14 +168,7 @@ export default function WeeklyProgressCard({ data }) {
               Avg {m.label}
             </p>
 
-            <p className="font-semibold">
-              {m.current}
-
-              <span className="text-[var(--text-muted)] font-normal">
-                {" "}
-                / {m.goal}
-              </span>
-            </p>
+            <p className="font-semibold">{m.current}</p>
           </div>
         ))}
       </div>
