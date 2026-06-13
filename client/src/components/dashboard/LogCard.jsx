@@ -77,6 +77,12 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
   const isSaved = mode === "saved";
   const items = result?.items || [];
   const total = result?.total || {};
+
+  const displayCalories =
+    items[0]?.type === "activity"
+      ? -(total.calories || 0)
+      : total.calories || 0;
+
   const title =
     log.title ||
     items
@@ -109,14 +115,26 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
       return [
         { key: "use", label: "Use saved entry", icon: Save },
         { key: "edit", label: "Edit entry", icon: Pencil },
-        { key: "macros", label: "Adjust calories and macros", icon: SlidersHorizontal },
-        { key: "removeSaved", label: "Remove from saved entries", icon: Bookmark },
+        {
+          key: "macros",
+          label: "Adjust calories and macros",
+          icon: SlidersHorizontal,
+        },
+        {
+          key: "removeSaved",
+          label: "Remove from saved entries",
+          icon: Bookmark,
+        },
       ];
     }
 
     return [
       { key: "edit", label: "Edit entry", icon: Pencil },
-      { key: "macros", label: "Adjust calories and macros", icon: SlidersHorizontal },
+      {
+        key: "macros",
+        label: "Adjust calories and macros",
+        icon: SlidersHorizontal,
+      },
       { key: "date", label: "Change date and time", icon: CalendarClock },
       { key: "save", label: "Save entry", icon: Bookmark },
       { key: "delete", label: "Delete", icon: Trash2 },
@@ -287,26 +305,35 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
         <div className="flex items-center shrink-0 ml-auto">
           <div className="flex items-center gap-8">
             <div className="text-right w-12">
-              <p className="text-sm font-semibold">{total.calories ?? 0}</p>
+              <p className="text-sm font-semibold">{displayCalories}</p>
               <p className="text-[10px] text-[var(--text-muted)]">Calories</p>
             </div>
 
             <div className="text-right w-10">
-              <p className="text-sm font-semibold" style={{ color: "var(--warning)" }}>
+              <p
+                className="text-sm font-semibold"
+                style={{ color: "var(--warning)" }}
+              >
                 {total.carbs ?? 0}g
               </p>
               <p className="text-[10px] text-[var(--text-muted)]">Carbs</p>
             </div>
 
             <div className="text-right w-10">
-              <p className="text-sm font-semibold" style={{ color: "var(--primary)" }}>
+              <p
+                className="text-sm font-semibold"
+                style={{ color: "var(--primary)" }}
+              >
                 {total.protein ?? 0}g
               </p>
               <p className="text-[10px] text-[var(--text-muted)]">Protein</p>
             </div>
 
             <div className="text-right w-10">
-              <p className="text-sm font-semibold" style={{ color: "var(--purple)" }}>
+              <p
+                className="text-sm font-semibold"
+                style={{ color: "var(--purple)" }}
+              >
                 {total.fat ?? 0}g
               </p>
               <p className="text-[10px] text-[var(--text-muted)]">Fat</p>
@@ -371,7 +398,10 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
         <div className="px-6 pb-4">
           <div className="py-2 space-y-2">
             {items.map((item, i) => (
-              <div key={`${item.name}-${i}`} className="flex items-center justify-between py-2">
+              <div
+                key={`${item.name}-${i}`}
+                className="flex items-center justify-between py-2"
+              >
                 <div>
                   <p className="text-sm font-medium">{item.name}</p>
 
@@ -382,28 +412,30 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
 
                 <div className="flex gap-2 text-xs">
                   <span className="px-2 py-1 rounded-lg bg-[var(--surface-alt)]">
-                    {item.calories} cal
+                    {item.type === "activity"
+                      ? `-${item.calories || 0} kcal`
+                      : `+${item.calories || 0} kcal`}
                   </span>
 
                   <span
                     className="px-2 py-1 rounded-lg bg-[var(--surface-alt)]"
                     style={{ color: "var(--warning)" }}
                   >
-                    C {item.carbs}g
+                    C: {item.carbs} g
                   </span>
 
                   <span
                     className="px-2 py-1 rounded-lg bg-[var(--surface-alt)]"
                     style={{ color: "var(--primary)" }}
                   >
-                    P {item.protein}g
+                    P: {item.protein} g
                   </span>
 
                   <span
                     className="px-2 py-1 rounded-lg bg-[var(--surface-alt)]"
                     style={{ color: "var(--purple)" }}
                   >
-                    F {item.fat}g
+                    F: {item.fat} g
                   </span>
                 </div>
               </div>
@@ -434,7 +466,10 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
       )}
 
       {modal === "macros" && (
-        <ActionModal title="Adjust Calories And Macros" onClose={() => setModal(null)}>
+        <ActionModal
+          title="Adjust Calories And Macros"
+          onClose={() => setModal(null)}
+        >
           <form onSubmit={handleMacrosSubmit} className="space-y-4">
             {["calories", "carbs", "protein", "fat"].map((field) => (
               <label key={field} className="block text-sm">
@@ -469,7 +504,10 @@ export default function LogCard({ log, index = 0, mode = "log" }) {
       )}
 
       {modal === "date" && (
-        <ActionModal title="Change Date And Time" onClose={() => setModal(null)}>
+        <ActionModal
+          title="Change Date And Time"
+          onClose={() => setModal(null)}
+        >
           <form onSubmit={handleDateSubmit} className="space-y-4">
             <input
               type="datetime-local"

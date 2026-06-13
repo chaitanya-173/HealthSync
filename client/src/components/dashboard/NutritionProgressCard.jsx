@@ -4,9 +4,6 @@ import { useDashboard } from "../../context/DashboardContext";
 export default function NutritionProgressCard() {
   const { summary, goals } = useDashboard();
 
-  // console.log("CARD SUMMARY from nutrition", summary);
-  // console.log("CARD GOALS from nutrition", goals);
-
   if (!summary || !goals) {
     return (
       <div className="w-full h-[205px] rounded-lg bg-[var(--surface)] animate-pulse" />
@@ -165,7 +162,7 @@ export default function NutritionProgressCard() {
 
           <p className="text-xs text-[var(--text-muted)]">/ {calories.goal}</p>
 
-          <p className="mt-1 text-[11px] text-[var(--text-muted)]">Calories</p>
+          <p className="mt-1 text-[11px] text-[var(--text-muted)]">Calories (kcal)</p>
         </div>
       </div>
 

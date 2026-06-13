@@ -1,10 +1,12 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useDashboard } from "../../context/DashboardContext";
+import { getLoggedDates } from "../../services/logService";
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate, logs, formatLocalDate } =
     useDashboard();
+  const [datesWithLogs, setDatesWithLogs] = useState([]);
 
   const [currentMonth, setCurrentMonth] = useState(
     new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1),
@@ -19,9 +21,22 @@ export default function Calendar() {
 
   const days = ["M", "T", "W", "T", "F", "S", "S"];
 
-  const datesWithLogs = [
-    ...new Set(logs.map((log) => formatLocalDate(new Date(log.createdAt)))),
-  ];
+  useEffect(() => {
+    const fetchLoggedDates = async () => {
+      try {
+        const res = await getLoggedDates(
+          currentMonth.getFullYear(),
+          currentMonth.getMonth() + 1,
+        );
+
+        setDatesWithLogs(res.data.data || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchLoggedDates();
+  }, [currentMonth]);
 
   const calendarDays = useMemo(() => {
     const year = currentMonth.getFullYear();
@@ -48,8 +63,7 @@ export default function Calendar() {
 
   const isSameDay = (d1, d2) => d1?.toDateString() === d2?.toDateString();
 
-  const hasLogs = (date) =>
-    datesWithLogs.includes(formatLocalDate(date));
+  const hasLogs = (date) => datesWithLogs.includes(formatLocalDate(date));
 
   const isFutureDate = (date) => {
     const todayCopy = new Date();

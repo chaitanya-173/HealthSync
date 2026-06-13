@@ -386,12 +386,21 @@ export default function DailyGoals() {
                   type="number"
                   min="1200"
                   value={goals?.calories || 0}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const calories = Number(e.target.value);
+
                     setGoals((prev) => ({
                       ...prev,
-                      calories: Number(e.target.value),
-                    }))
-                  }
+                      calories,
+                      carbs: Math.round(
+                        (calories * distribution.carbs) / 100 / 4,
+                      ),
+                      protein: Math.round(
+                        (calories * distribution.protein) / 100 / 4,
+                      ),
+                      fat: Math.round((calories * derivedFatPercent) / 100 / 9),
+                    }));
+                  }}
                   className="w-full bg-transparent text-3xl font-bold outline-none"
                 />
 

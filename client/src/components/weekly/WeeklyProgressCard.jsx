@@ -152,7 +152,7 @@ export default function WeeklyProgressCard({ data }) {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold">{avgCalories}</h2>
           <p className="text-xs text-[var(--text-muted)] mt-1">
-            Avg Calories (Kcal)
+            Avg Calories (kcal)
           </p>
         </div>
       </div>

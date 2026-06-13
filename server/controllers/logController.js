@@ -9,7 +9,7 @@ You are a nutrition and fitness assistant.
 User input: "${text}"
 
 Tasks:
-1. Identify food items or physical activities.
+1. Identify food items and physical activities.
 2. If input is NOT related to food or activity, return:
 {
   "is_valid": false
@@ -18,10 +18,10 @@ Tasks:
 3. If valid, return STRICT JSON:
 {
   "is_valid": true,
-  "type": "food" or "activity",
   "items": [
     {
       "name": "",
+      "type": "food" or "activity",
       "quantity": "",
       "calories": number,
       "protein": number,
@@ -39,12 +39,14 @@ Tasks:
 }
 
 Rules:
+- Each item MUST have its own type
+- Food and activity can appear together in the same input
+- Activity items should have protein/carbs/fat = 0 unless explicitly known
+- Total values should be simple sum of all item values
 - Only JSON, no extra text
-- Do not wrap in markdown (no \`\`\`json)
-- Use realistic values for Indian home-cooked food
-- Assume standard serving sizes (1 roti = ~100 kcal, 1 cup dal cooked = ~120 kcal, ~5-7g protein)
-- Avoid using raw/dry values
-- If unsure → best estimate
+- Do not wrap in markdown
+- Use realistic Indian food values
+- If unsure, make best estimate
 `;
 
 const parseLocalDate = (value = "") => {
@@ -154,7 +156,6 @@ export const updateLog = async (req, res) => {
     await log.save();
 
     return successResponse(res, "Log updated", log);
-
   } catch (error) {
     return errorResponse(res, error.message, 500);
   }
@@ -183,7 +184,6 @@ export const updateMacros = async (req, res) => {
     await log.save();
 
     return successResponse(res, "Macros updated", log);
-
   } catch (error) {
     return errorResponse(res, error.message, 500);
   }
@@ -212,7 +212,6 @@ export const updateDateTime = async (req, res) => {
     await log.save();
 
     return successResponse(res, "Date & time updated", log);
-
   } catch (error) {
     return errorResponse(res, error.message, 500);
   }
@@ -281,23 +280,36 @@ export const getWeeklyLogs = async (req, res) => {
     logs.forEach((log) => {
       const key = formatLocalDate(new Date(log.createdAt));
 
-      if (grouped[key]) {
-        const total = log.result?.total || {};
+      if (!grouped[key]) return;
 
+      const total = log.result?.total;
+
+      if (!total) return;
+
+      const logType =
+        log.result?.type || log.result?.items?.[0]?.type || "food";
+
+      if (logType === "activity") {
+        grouped[key].calories -= total.calories || 0;
+      } else {
         grouped[key].calories += total.calories || 0;
         grouped[key].protein += total.protein || 0;
         grouped[key].carbs += total.carbs || 0;
         grouped[key].fat += total.fat || 0;
-        grouped[key].meals += 1;
-        grouped[key].logs.push(log);
       }
+
+      grouped[key].meals += 1;
+      grouped[key].logs.push(log);
     });
 
     waterLogs.forEach((log) => {
       if (grouped[log.date]) {
         grouped[log.date].waterCups = log.cups || 0;
         grouped[log.date].waterGoalCups =
-          log.goalCups || req.user.waterSettings?.dailyCups || req.user.nutritionGoals?.waterCups || 10;
+          log.goalCups ||
+          req.user.waterSettings?.dailyCups ||
+          req.user.nutritionGoals?.waterCups ||
+          10;
       }
     });
 
@@ -310,7 +322,6 @@ export const getWeeklyLogs = async (req, res) => {
     }));
 
     return successResponse(res, "Weekly logs fetched", days);
-
   } catch (error) {
     return errorResponse(res, error.message, 500);
   }
@@ -370,7 +381,33 @@ export const getLogsByDay = async (req, res) => {
     }).sort({ createdAt: -1 });
 
     return successResponse(res, "Logs fetched for day", logs);
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
 
+export const getLoggedDates = async (req, res) => {
+  try {
+    const { year, month } = req.query;
+
+    const start = new Date(year, month - 1, 1);
+    const end = new Date(year, month, 0, 23, 59, 59, 999);
+
+    const logs = await Log.find({
+      userId: req.user._id,
+      createdAt: {
+        $gte: start,
+        $lte: end,
+      },
+    }).select("createdAt");
+
+    const dates = [
+      ...new Set(
+        logs.map((log) => formatLocalDate(new Date(log.createdAt)))
+      ),
+    ];
+
+    return successResponse(res, "Logged dates fetched", dates);
   } catch (error) {
     return errorResponse(res, error.message, 500);
   }
@@ -402,12 +439,21 @@ export const getSummary = async (req, res) => {
     let totalFat = 0;
 
     logs.forEach((log) => {
-      const total = log.result?.total || {};
+      const total = log.result?.total;
 
-      totalCalories += total.calories || 0;
-      totalProtein += total.protein || 0;
-      totalCarbs += total.carbs || 0;
-      totalFat += total.fat || 0;
+      if (!total) return;
+
+      const logType =
+        log.result?.type || log.result?.items?.[0]?.type || "food";
+
+      if (logType === "activity") {
+        totalCalories -= total.calories || 0;
+      } else {
+        totalCalories += total.calories || 0;
+        totalProtein += total.protein || 0;
+        totalCarbs += total.carbs || 0;
+        totalFat += total.fat || 0;
+      }
     });
 
     return successResponse(res, "Summary fetched", {

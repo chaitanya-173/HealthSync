@@ -10,6 +10,7 @@ import {
   getLogsByDay,
   getSummary,
   getStreak,
+  getLoggedDates,
 } from "../controllers/logController.js";
 
 const router = Router();
@@ -22,6 +23,7 @@ router.delete("/:id", protect, deleteLog);
 
 router.get("/weekly-logs", protect, getWeeklyLogs);
 router.get("/day", protect, getLogsByDay);
+router.get("/logged-dates", protect, getLoggedDates);
 router.get("/summary", protect, getSummary);
 router.get("/streak", protect, getStreak);
 

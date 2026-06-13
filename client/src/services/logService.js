@@ -44,3 +44,11 @@ export const updateDateTime = async (id, payload) => {
 export const deleteLog = async (id) => {
   return await api.delete(`/api/log/${id}`);
 };
+
+// Get logged dates
+export const getLoggedDates = async (year, month) => {
+  return await api.get(
+    `/api/log/logged-dates?year=${year}&month=${month}`
+  );
+};
+

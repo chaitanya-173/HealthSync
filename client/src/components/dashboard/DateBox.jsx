@@ -25,7 +25,7 @@ export default function DateBox() {
         {formatDisplayDate(selectedDate)}
       </span>
 
-      <ChevronDown size={15} className="text-[var(--text-muted)]" />
+      {/* <ChevronDown size={15} className="text-[var(--text-muted)]" /> */}
     </button>
   );
 }
