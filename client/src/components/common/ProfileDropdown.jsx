@@ -113,15 +113,6 @@ export default function ProfileDropdown({ collapsed, open, setOpen }) {
           {/* Menu */}
           <div className="py-2">
             <MenuItem
-              icon={<Pencil size={16} />}
-              text="Edit Profile"
-              onClick={() => {
-                navigate("/edit-profile");
-                closeDropdown();
-              }}
-            />
-
-            <MenuItem
               icon={<MessageSquare size={16} />}
               text="Feedback"
               onClick={() => setFeedbackOpen((prev) => !prev)}
