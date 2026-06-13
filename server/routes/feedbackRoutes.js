@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { protect } from "../middleware/authMiddleware.js";
-import { submitFeedback } from "../controllers/logController.js";
+import { validate } from "../middleware/validate.js";
+import { body } from "express-validator";
+import { submitFeedback } from "../controllers/feedbackController.js";
+
+const router = Router();
 
 router.post(
-  "/feedback",
+  "/",
   protect,
   [
     body("category")
@@ -21,3 +25,5 @@ router.post(
   validate,
   submitFeedback,
 );
+
+export default router;
