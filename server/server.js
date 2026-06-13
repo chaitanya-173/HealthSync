@@ -10,6 +10,7 @@ import logRoutes from "./routes/logRoutes.js";
 import savedRoutes from "./routes/savedRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import waterRoutes from "./routes/waterRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -20,14 +21,20 @@ const configuredOrigins = (process.env.CLIENT_URL || "")
   .filter(Boolean);
 
 const isAllowedDevOrigin = (origin = "") => {
-  return /^http:\/\/(localhost|127\.0\.0\.1|\d{1,3}(?:\.\d{1,3}){3}):5173$/.test(origin);
+  return /^http:\/\/(localhost|127\.0\.0\.1|\d{1,3}(?:\.\d{1,3}){3}):5173$/.test(
+    origin,
+  );
 };
 
 // Middlewares
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || configuredOrigins.includes(origin) || isAllowedDevOrigin(origin)) {
+      if (
+        !origin ||
+        configuredOrigins.includes(origin) ||
+        isAllowedDevOrigin(origin)
+      ) {
         callback(null, true);
         return;
       }
@@ -49,12 +56,13 @@ app.get("/", (req, res) => {
   res.send("HealthSync backend is running...");
 });
 
-// Routes 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/log", logRoutes);
 app.use("/api/saved", savedRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/water", waterRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 app.use(errorHandler);
 

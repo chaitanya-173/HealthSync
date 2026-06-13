@@ -11,7 +11,6 @@ import { validate } from "../middleware/validate.js";
 
 const router = Router();
 
-// ---------------- SIGNUP VALIDATION ----------------
 router.post(
   "/signup",
   [
@@ -44,7 +43,6 @@ router.post(
   signup,
 );
 
-// ---------------- LOGIN VALIDATION ----------------
 router.post(
   "/login",
   [
